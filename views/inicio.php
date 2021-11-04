@@ -47,12 +47,21 @@ p{
 
     <?php require_once "menu.php"; ?>
 
-<h1>Colegio de Bachilleres de Tabasco Plantel No. 11</h1>
+
+<div class="card">
+    <img class="card-img-top" src="holder.js/100x180/" alt="">
+    <div class="card-body">
+
+    <h1>Colegio de Bachilleres de Tabasco Plantel No. 11</h1>
 
 <h2>MISION</h1>
     <p>Formar jóvenes y adultos aptos para el desarrollo laboral y la formación académica superior </p>
 <h2>VISIÓN</h1>
     <p>Se lider en la educación media y superior en la entidad y en el país, garantizando el egreso de individuos éticos, competentes y comprometidos con el entorno social y global.</p>
+    
+    </div>
+</div>
+
 
     <?php require_once 'footer.php'; ?>
 

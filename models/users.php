@@ -18,7 +18,7 @@ class User{
 		//$_SESSION['iduser']=self::traeID($datos);
 
 		$sql=$this->db->query("SELECT * from user where usuario='$datos[0]' and password='$password'");
-		if($sql->num_rows > 0){
+		if($sql->rowCount() > 0){
 			return 1;
 		}else{
 			return 0;

@@ -6,10 +6,10 @@ require_once 'dependencias.php';//parte del codigo html principal
 ?>
 
 
-<p class="lead" style="margin-top: 0px" >Lista de Alumnos</p> <hr class="my-1" >
+<p class="lead" style="margin-top: 0px" >Lista de Profesor</p> <hr class="my-1" >
     <div  align="left" style="margin-bottom: 5px; margin-top: 0px;">
       <a  class="btn btn-info" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-    Agregar alumno
+    Agregar profesor
    </a>
     </div>
 
@@ -61,20 +61,11 @@ require_once 'dependencias.php';//parte del codigo html principal
               </div>
             </div>
 
-
-                <div class="col-sm-3">
+            <div class="col-sm-3">
                 <div class="form-group">
-                  <label>Matrícula</label>
-                  <input type="text" class="form-control" id="matricula" name="matricula" maxlength="40"
- placeholder="Matrícula"   >
-              </div>
-            </div>
-
-              <div class="col-sm-3">
-                <div class="form-group">
-                  <label>Tutor</label>
-                  <input type="text" class="form-control" id="tutor" name="tutor" maxlength="40"
- placeholder="tutor"   >
+                  <label>Profesión</label>
+                  <input type="text" class="form-control" id="profesion" name="profesion" maxlength="40"
+ placeholder="Profesión"   >
               </div>
             </div>
 
@@ -94,7 +85,7 @@ require_once 'dependencias.php';//parte del codigo html principal
   <div class="card card-body ">
   <form id="formXAlumno" >
 <div class="alert alert-danger" role="alert">
-  Confirme si desea eliminar el Alumno ?
+  Confirme si desea eliminar al profesor ?
   <input type="hidden" name="IDx" id="IDx" class="form-control">
 </div>
          <span id="xAlumno" data-toggle="collapse"  class="btn btn-danger">Eliminar Alumno</span>
@@ -107,7 +98,7 @@ require_once 'dependencias.php';//parte del codigo html principal
 
             <?php
             $table = new tablacuerpo();
-             $table->alumnos("SELECT * FROM alumnos order by Nombre",1);
+             $table->alumnos("SELECT * FROM profesor order by Nombre",1);
              ?>
 
 
@@ -129,9 +120,9 @@ require_once 'dependencias.php';//parte del codigo html principal
             $.ajax({
               type:"POST",
               data:datos,
-              url:"../controllers/save_alumno.php",
+              url:"../controllers/profesor/save.php",
               success:function(data){
-                  window.location="../views/alumnos.php";
+                  window.location="../views/profesor.php";
                  }
             }); 
 
@@ -141,9 +132,9 @@ require_once 'dependencias.php';//parte del codigo html principal
             $.ajax({
               type:"POST",
               data:datos,
-              url:"../controllers/update_alumno.php",
+              url:"../controllers/profesor/update.php",
               success:function(data){
-                  window.location="../views/alumnos.php";
+                  window.location="../views/profesor.php";
                  }
             }); 
              }
@@ -157,7 +148,8 @@ require_once 'dependencias.php';//parte del codigo html principal
                 var apellido  = $('#'+id).children('td[data-target=Apellido]').text();
                 var direccion  = $('#'+id).children('td[data-target=Direccion]').text();
                 var matricula  = $('#'+id).children('td[data-target=Matricula]').text();
-                var tutor  = $('#'+id).children('td[data-target=Tutor]').text();
+                var movil  = $('#'+id).children('td[data-target=Movil]').text();
+                var profesion  = $('#'+id).children('td[data-target=Profesion]').text();
                 var opc = 1;
 
                 $('#ID').val(id);
@@ -165,7 +157,8 @@ require_once 'dependencias.php';//parte del codigo html principal
                 $('#apellido').val(apellido);
                 $('#direccion').val(direccion);                   
                 $('#matricula').val(matricula);
-                $('#tutor').val(tutor);
+                $('#movil').val(movil);
+                $('#profesion').val(profesion);
                 $('#opc').val(opc);
           });
 
@@ -182,13 +175,12 @@ require_once 'dependencias.php';//parte del codigo html principal
               $.ajax({
                 type:"POST",
                 data:datos,
-                url:"../controllers/x_alumno.php",
+                url:"../controllers/profesor/delete.php",
                 success:function(data){
-                    window.location="../views/alumnos.php";
+                    window.location="../views/profesor.php";
                   }
               }); 
           });
 
     });
 </script>
-

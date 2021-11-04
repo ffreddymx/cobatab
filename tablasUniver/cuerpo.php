@@ -1,96 +1,258 @@
 <?php
 
 
-
 class tablacuerpo{
 
 
     private $db;
+		private $alumnos;
+    private $target;
 
     public function __construct(){
         $this->db=Conectar::conexion();
+        $this->alumnos = array();
+        $this->target = array();
     }
 
 
-           public function alumnos($a,$link)
-                {
-                                    $sql =  $this->db->query($a); //parte1
-                                      echo "<thead class='thead-dark'> <tr>";
-                                      for($i=0;$i<$sql->field_count;$i++) 
-                                      {
-                                         echo "<th scope='col'>"; 
-                                         print_r($sql->fetch_field_direct($i)->name); 
-                                         echo"</th>";
-                                       }
-                                         echo "<th>Modificar</th>
-                                         <th>Eliminar</th>
-                                         </tr></thead><tbody>";
-                                         while ($row= $sql->fetch_assoc()) //finparte1
-                                       {  
-                                                   echo "<tr id=".$row['id'].">"; //hacen las filas
-                                                     for($i=0;$i<$sql->field_count;$i++) //parte2
-                                                      {
-                                                        echo "<td data-target='"; 
-                                                        print_r($sql->fetch_field_direct($i)->name);
-                                                        echo "' >";
-                                                        print_r($row[$sql->fetch_field_direct($i)->name]); 
-                                                        echo "</td>"; //finparte2
-                                                      }
-            if($link!=0){
-          ?>
-           <td><a class="btn btn-info btn-sm" aria-controls="collapseExample" data-toggle="collapse" href="#collapseExample" data-role="updateAlumno" data-id="<?php echo $row["id"] ?>">Modificar</a></td>     
-
-                <td><a class="btn btn-danger btn-sm" aria-controls="xAlumno" data-toggle="collapse" href="#xAlumno" data-role="xAlumno" data-id="<?php echo $row["id"] ?>">Eliminar</a></td>        
-                 <?php       
+public function alumnos($a,$link)
+    {           
+      $consulta = $this->db->query($a);
+			while($filas = $consulta->fetch(PDO::FETCH_ASSOC) ){
+				$this->alumnos[] = $filas;
+			}
+      echo "<table class='table table-sm table-hover'><thead class='thead-dark'><tr> ";//iniciamos la tabla
+            
+        foreach($this->alumnos[0] as $key=>$value){
+                  echo'<th>' . ($key) . '</th>';
+                  $this->target[] = $key;
                }
-            echo "</tr>";
-                                                                            }
-            mysqli_free_result($sql);
-                 }
+  
+               echo "<th>Modificar</th><th>Eliminar</th>";
+               echo '</tr></thead><tbody border="1">';
 
-           
+                foreach ( $this->alumnos as $r ) {
+                 echo '<tr id='.$r["id"].'>';
+                 $i = 0;
+                    foreach ( $r as $v ) {
+                    echo '<td data-target="'.$this->target[$i].'">'.$v.'</td>';
+                    $i++;
+                }
+                if($link!=0){
+                  ?>
+            <td><a class="btn btn-info btn-sm" aria-controls="collapseExample" data-toggle="collapse" href="#collapseExample" data-role="updateAlumno" data-id="<?php echo $r['id']; ?>">Modificar</a></td>     
+            <td><a class="btn btn-danger btn-sm" aria-controls="xAlumno" data-toggle="collapse" href="#xAlumno" data-role="xAlumno" data-id="<?php echo $r['id']; ?>">Eliminar</a></td>        
+             <?php       
+                   } 
+                echo '</tr>';
+                }
+        echo '</tbody> </table>';
+    }
 
+  //==============================================================
 
- public static function proyecto($a,$link,$conexion)
-                {
-                                    $query =  mysqli_query($conexion,$a); //parte1
-                                      echo "<thead class='thead-dark'> <tr>";
-                                      for($i=0;$i<mysqli_num_fields($query);$i++) 
-                                      {
-                                         echo "<th scope='col'>"; 
-                                         print_r(mysqli_fetch_field_direct($query,$i)->name); 
-                                         echo"</th>";
-                                       }
-                                         echo "<th>Modificar</th>
-                                         <th>Eliminar</th>
-                                         </tr></thead><tbody>";
-                                         while ($row=mysqli_fetch_assoc($query)) //finparte1
-                                       {  
-           echo "<tr id=".$row['id'].">"; //hacen las filas
-             for($i=0;$i<mysqli_num_fields($query);$i++) //parte2
-                                      {
-                                        echo "<td data-target='"; 
-                                        print_r(mysqli_fetch_field_direct($query, $i)->name);
-                                        echo "' >";
-                                        print_r($row[mysqli_fetch_field_direct($query,$i)->name]); 
-                                        echo "</td>"; //finparte2
-                                      }
-            if($link!=0){
-          ?>
-           <td><a class="btn btn-info btn-sm" aria-controls="collapseExample" data-toggle="collapse" href="#collapseExample" data-role="updateAlumno" data-id="<?php echo $row["id"] ?>">Modificar</a></td>     
-
-                <td><a class="btn btn-danger btn-sm" aria-controls="xProyecto" data-toggle="collapse" href="#xProyecto" data-role="xProyecto" data-id="<?php echo $row["id"] ?>">Eliminar</a></td>        
-                 <?php       
+    public function profesor($a,$link)
+    {           
+      $consulta = $this->db->query($a);
+			while($filas = $consulta->fetch(PDO::FETCH_ASSOC) ){
+				$this->alumnos[] = $filas;
+			}
+      echo "<table class='table table-sm table-hover'><thead class='thead-dark'><tr> ";//iniciamos la tabla
+            
+        foreach($this->alumnos[0] as $key=>$value){
+                  echo'<th>' . ($key) . '</th>';
+                  $this->target[] = $key;
                }
-            echo "</tr>";
-                                                                            }
-            mysqli_free_result($query);
-                 }
+  
+               echo "<th>Modificar</th><th>Eliminar</th>";
+               echo '</tr></thead><tbody border="1">';
+
+                foreach ( $this->alumnos as $r ) {
+                 echo '<tr id='.$r["id"].'>';
+                 $i = 0;
+                    foreach ( $r as $v ) {
+                    echo '<td data-target="'.$this->target[$i].'">'.$v.'</td>';
+                    $i++;
+                }
+                if($link!=0){
+                  ?>
+            <td><a class="btn btn-info btn-sm" aria-controls="collapseExample" data-toggle="collapse" href="#collapseExample" data-role="updateAlumno" data-id="<?php echo $r['id']; ?>">Modificar</a></td>     
+            <td><a class="btn btn-danger btn-sm" aria-controls="xAlumno" data-toggle="collapse" href="#xAlumno" data-role="xAlumno" data-id="<?php echo $r['id']; ?>">Eliminar</a></td>        
+             <?php       
+                   } 
+                echo '</tr>';
+                }
+        echo '</tbody> </table>';
+    }
 
 
+  //==============================================================GRUPO
 
+  public function grupo($a,$link)
+  {           
+    $consulta = $this->db->query($a);
+    while($filas = $consulta->fetch(PDO::FETCH_ASSOC) ){
+      $this->alumnos[] = $filas;
+    }
+    echo "<table class='table table-sm table-hover'><thead class='thead-dark'><tr> ";//iniciamos la tabla
+          
+      foreach($this->alumnos[0] as $key=>$value){
+                echo'<th>' . ($key) . '</th>';
+                $this->target[] = $key;
+             }
+             echo "<th style='width:100px;'>Modificar</th><th style='width:100px;'>Eliminar</th>";
+             echo '</tr></thead><tbody border="1">';
+
+              foreach ( $this->alumnos as $r ) {
+               echo '<tr id='.$r["id"].'>';
+               $i = 0;
+                  foreach ( $r as $v ) {
+                  echo '<td data-target="'.$this->target[$i].'">'.$v.'</td>';
+                  $i++;
+              }
+              if($link!=0){
+                ?>
+          <td><a style="width:100px;" class="btn btn-info btn-sm" aria-controls="collapseExample" data-toggle="collapse" href="#collapseExample" data-role="updateAlumno" data-id="<?php echo $r['id']; ?>">Modificar</a></td>     
+          <td><a style="width:100px;" class="btn btn-danger btn-sm" aria-controls="xAlumno" data-toggle="collapse" href="#collapselumno" data-role="xAlumno" data-id="<?php echo $r['id']; ?>">Eliminar</a></td>        
+           <?php       
+                 } 
+              echo '</tr>';
+              }
+      echo '</tbody> </table>';
+  }
+
+
+//==============================================================grado
+
+public function grado($a,$link,$oculto)
+{           
+  $consulta = $this->db->query($a);
+  while($filas = $consulta->fetch(PDO::FETCH_ASSOC) ){
+    $this->alumnos[] = $filas;
+  }
+  echo "<table class='table table-sm table-hover'><thead class='thead-dark'><tr> ";//iniciamos la tabla
+
+    $i=0;//para ocultar las columnas
+    foreach($this->alumnos[0] as $key=>$value){
+              if($i<=$oculto)
+              echo'<th style="display:none;">' . ($key) . '</th>';
+              else 
+              echo'<th >' . ($key) . '</th>';
+              $this->target[] = $key;
+              $i++;
+           }
+           echo "<th style='width:100px;'>Modificar</th><th style='width:100px;'>Eliminar</th>";
+           echo '</tr></thead><tbody border="1">';
+            foreach ( $this->alumnos as $r ) {
+             echo '<tr id='.$r["id"].'>';
+             $i = 0;
+                foreach ( $r as $v ) {
+                  if($i<=$oculto)
+                  echo '<td style="display:none;" data-target="'.$this->target[$i].'">'.$v.'</td>';
+                  else
+                  echo '<td data-target="'.$this->target[$i].'">'.$v.'</td>';
+   
+                  $i++;
+            }
+            if($link!=0){
+              ?>
+        <td><a style="width:100px;" class="btn btn-info btn-sm" aria-controls="collapseExample" data-toggle="collapse" href="#collapseExample" data-role="updateAlumno" data-id="<?php echo $r['id']; ?>">Modificar</a></td>     
+        <td><a style="width:100px;" class="btn btn-danger btn-sm" aria-controls="xAlumno" data-toggle="collapse" href="#collapselumno" data-role="xAlumno" data-id="<?php echo $r['id']; ?>">Eliminar</a></td>        
+         <?php       
+               } 
+            echo '</tr>';
+            }
+    echo '</tbody> </table>';
 }
 
 
+//==============================================================asignatura
+public function asignatura($a,$link,$oculto)
+{           
+  $consulta = $this->db->query($a);
+  while($filas = $consulta->fetch(PDO::FETCH_ASSOC) ){
+    $this->alumnos[] = $filas;
+  }
+  echo "<table class='table table-sm table-hover'><thead class='thead-dark'><tr> ";//iniciamos la tabla
+
+    $i=0;//para ocultar las columnas
+    foreach($this->alumnos[0] as $key=>$value){
+              if($i<=$oculto)
+              echo'<th style="display:none;">' . ($key) . '</th>';
+              else 
+              echo'<th >' . ($key) . '</th>';
+              $this->target[] = $key;
+              $i++;
+           }
+           echo "<th style='width:100px;'>Modificar</th><th style='width:100px;'>Eliminar</th>";
+           echo '</tr></thead><tbody border="1">';
+            foreach ( $this->alumnos as $r ) {
+             echo '<tr id='.$r["id"].'>';
+             $i = 0;
+                foreach ( $r as $v ) {
+                  if($i<=$oculto)
+                  echo '<td style="display:none;" data-target="'.$this->target[$i].'">'.$v.'</td>';
+                  else
+                  echo '<td data-target="'.$this->target[$i].'">'.$v.'</td>';
+   
+                  $i++;
+            }
+            if($link!=0){
+              ?>
+        <td><a style="width:100px;" class="btn btn-info btn-sm" aria-controls="collapseExample" data-toggle="collapse" href="#collapseExample" data-role="updateAlumno" data-id="<?php echo $r['id']; ?>">Modificar</a></td>     
+        <td><a style="width:100px;" class="btn btn-danger btn-sm" aria-controls="xAlumno" data-toggle="collapse" href="#collapselumno" data-role="xAlumno" data-id="<?php echo $r['id']; ?>">Eliminar</a></td>        
+         <?php       
+               } 
+            echo '</tr>';
+            }
+    echo '</tbody> </table>';
+}
+
+
+//==============================================================asignatura
+
+public function notas($a,$link,$oculto)
+{           
+  $consulta = $this->db->query($a);
+  while($filas = $consulta->fetch(PDO::FETCH_ASSOC) ){
+    $this->alumnos[] = $filas;
+  }
+  echo "<table class='table table-sm table-hover'><thead class='thead-dark'><tr> ";//iniciamos la tabla
+
+    $i=0;//para ocultar las columnas
+    foreach($this->alumnos[0] as $key=>$value){
+              if($i<=$oculto)
+              echo'<th style="display:none;">' . ($key) . '</th>';
+              else 
+              echo'<th >' . ($key) . '</th>';
+              $this->target[] = $key;
+              $i++;
+           }
+           echo "<th style='width:100px;'>Modificar</th><th style='width:100px;'>Eliminar</th>";
+           echo '</tr></thead><tbody border="1">';
+            foreach ( $this->alumnos as $r ) {
+             echo '<tr id='.$r["id"].'>';
+             $i = 0;
+                foreach ( $r as $v ) {
+                  if($i<=$oculto)
+                  echo '<td style="display:none;" data-target="'.$this->target[$i].'">'.$v.'</td>';
+                  else
+                  echo '<td data-target="'.$this->target[$i].'">'.$v.'</td>';
+   
+                  $i++;
+            }
+            if($link!=0){
+              ?>
+        <td><a style="width:100px;" class="btn btn-info btn-sm" aria-controls="collapseExample" data-toggle="collapse" href="#collapseExample" data-role="updateAlumno" data-id="<?php echo $r['id']; ?>">Modificar</a></td>     
+        <td><a style="width:100px;" class="btn btn-danger btn-sm" aria-controls="xAlumno" data-toggle="collapse" href="#collapselumno" data-role="xAlumno" data-id="<?php echo $r['id']; ?>">Eliminar</a></td>        
+         <?php       
+               } 
+            echo '</tr>';
+            }
+    echo '</tbody> </table>';
+}
+
+
+}
 
 ?>

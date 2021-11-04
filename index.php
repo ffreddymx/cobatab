@@ -1,6 +1,6 @@
 <?php
-require_once("db/db.php");//la conexion
-require_once("controllers/personas_controller.php");
+//require_once("db/db.php");//la conexion
+//require_once("controllers/personas_controller.php");
 
 ?>
 
