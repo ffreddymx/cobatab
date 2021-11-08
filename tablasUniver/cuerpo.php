@@ -293,6 +293,54 @@ public function inscribir($a,$link,$oculto)
     echo '</tbody> </table>';
 }
 
+//==============================================================irregulares
+public function irregulares($a,$link,$oculto)
+{           
+  $consulta = $this->db->query($a);
+  while($filas = $consulta->fetch(PDO::FETCH_ASSOC) ){
+    $this->alumnos[] = $filas;
+  }
+  echo "<table class='table table-sm table-hover'><thead class='thead-dark'><tr> ";//iniciamos la tabla
+
+    $i=0;//para ocultar las columnas
+    foreach($this->alumnos[0] as $key=>$value){
+              if($i<=$oculto)
+              echo'<th style="display:none;">' . ($key) . '</th>';
+              else 
+              echo'<th >' . ($key) . '</th>';
+              $this->target[] = $key;
+              $i++;
+           }
+           echo '</tr></thead><tbody border="1">';
+            foreach ( $this->alumnos as $r ) {
+             echo '<tr id='.$r["id"].'>';
+             $i = 0;
+                foreach ( $r as $v ) {
+                  if($i<=$oculto)
+                  echo '<td style="display:none;" data-target="'.$this->target[$i].'">'.$v.'</td>';
+                  else
+                  echo '<td data-target="'.$this->target[$i].'">'.$v.'</td>';
+   
+                  $i++;
+            }
+            echo '</tr>';
+            }
+    echo '</tbody> </table>';
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 ?>

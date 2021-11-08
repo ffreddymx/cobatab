@@ -12,6 +12,10 @@ $grupo = $grup->get_grupounique();
 $grad=new grado_model();
 $grado = $grad->get_gradounique();
 
+$gradox = (isset($_POST['grado'])) ? $_POST['grado'] : '';
+$grupox = (isset($_POST['grupo'])) ? $_POST['grupo'] : '';
+$ciclox = (isset($_POST['ciclo'])) ? $_POST['ciclo'] : '';
+$turno = $_GET['turno'];
 
 ?>
 
@@ -19,8 +23,6 @@ $grado = $grad->get_gradounique();
 
       <div class="card card-body">
           <div class="row">
-
-
           <div class="col-sm-2">
                 <div class="form-group">
                 <form id="formBuscar" action="" method="POST" >
@@ -75,7 +77,9 @@ $grado = $grad->get_gradounique();
             <div class="form-group">
           <input type="hidden" name="ID" id="ID" >
           <input style="margin-top: 25px;"  type="submit"  class="btn btn-info" name="buscarNombre" id="button-addon2" value="Mostrar los alumnos">
-          <a href="../pdf/alumnos_pdf.php" style="margin-top: 25px;" class="btn btn-danger">Imprimir</a>
+          <?php
+          echo '<a href="../pdf/alumnos_pdf.php?turno='.$turno.'&grado='.$gradox.'&grupo='.$grupox.'&ciclo='.$ciclox.'" style="margin-top: 25px;" class="btn btn-danger">Imprimir</a>';
+          ?>
            </form>
        </div>
      </div>

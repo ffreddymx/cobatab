@@ -9,17 +9,21 @@
                 href="alumnos.php" class="dashboard-nav-item "><i class="fas fa-tachometer-alt"></i> Alumnos
         </a><a
                 href="profesor.php" class="dashboard-nav-item"><i class="fas fa-file-upload"></i> Profesores </a>
+
             <div class='dashboard-nav-dropdown'><a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i
                     class="fas fa-photo-video"></i> Grupos </a>
-                <div class='dashboard-nav-dropdown-menu'>
+                    <div class='dashboard-nav-dropdown-menu'>
                     <a href="grupos.php?turno=Matutino"class="dashboard-nav-dropdown-item">Matutino</a>
                     <a href="grupos.php?turno=Vespertino"class="dashboard-nav-dropdown-item">Vespertino</a>
                     </div>
             </div>
-            <div class='dashboard-nav-dropdown'><a href="nota.php" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i
-                    class="fas fa-users"></i> Calificaciones </a>
-                <div class='dashboard-nav-dropdown-menu'>
 
+            <div class='dashboard-nav-dropdown'><a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i
+                    class="fas fa-users"></i> Calificaciones </a>
+                    <div class='dashboard-nav-dropdown-menu'>
+                    <a href="nota.php"class="dashboard-nav-dropdown-item">Calificar</a>
+                    <a href="alumnosaprobados.php"class="dashboard-nav-dropdown-item">Alumnos Aprobados</a>
+                    <a href="alumnosirregulares.php"class="dashboard-nav-dropdown-item">Alumnos Irregulares</a>
                     </div>
             </div>
 

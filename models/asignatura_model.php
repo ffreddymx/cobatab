@@ -17,6 +17,13 @@ class Asignatura_model{
         return $this->personas;
     }
 
+    public function get_asignaturaunique(){
+        $consulta=$this->db->query("SELECT DISTINCT Asignatura from asignatura");
+        while($filas=$consulta->fetch()){
+            $this->personas[]=$filas;
+        }
+        return $this->personas;
+    }
 
     public function saveAsignatura($datos){
 

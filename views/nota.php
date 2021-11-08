@@ -5,23 +5,92 @@ require_once "../tablasUniver/cuerpo.php";
 require_once 'dependencias.php';//parte del codigo html principal
 require_once '../models/asignatura_model.php';
 require_once '../models/personas_model.php';
+require_once '../models/grupo_model.php';
+require_once '../models/grado_model.php';
 
 $per=new Asignatura_model();
-$asignatura = $per->get_asignatura();
+$asignatura = $per->get_asignaturaunique();
 
 $per=new personas_model();
 $alumno = $per->get_alumnos();
 
+$per=new Grupo_model();
+$grupo = $per->get_grupo();
+
+$grad=new grado_model();
+$grado = $grad->get_gradounique();
 
 ?>
 
 
 <p class="lead" style="margin-top: 0px" >Calificaciones </p> <hr class="my-1" >
-    <div  align="left" style="margin-bottom: 5px; margin-top: 0px;">
-      <a  class="btn btn-info" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-    Agregar Calificación
-   </a>
-    </div>
+
+<div class="card card-body">
+          <div class="row">
+          <div class="col-sm-2">
+                <div class="form-group">
+                <form id="formBuscar" action="" method="POST" >
+                  <input type="hidden" name="opc" id="opc" value="0">
+  
+                  <label>Grupo</label>
+                <div class="mb-3">
+                    <select class="form-select" name="grupo" id="grupo">
+                        <option selected disabled> Selecciones el Grupo</option>
+                        <?php
+                        foreach($grupo as $grupos){ 
+                        echo "<option value='".$grupos['id']."'>".$grupos['Grupo'].' '.$grupos['Turno'].' '.$grupos['Ciclo']."</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="col-sm-2">
+             <div class="form-group">
+              <label>Grado</label>
+                <div class="mb-3">
+                    <select class="form-select" name="grado" id="grado">
+                        <option selected disabled>Seleccione el Grado</option>
+                        <?php
+                        foreach($grado as $grados){ 
+                        echo "<option value='".$grados['grado']."'>".$grados['grado']."</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-sm-2">
+             <div class="form-group">
+              <label>Asignatura</label>
+                <div class="mb-3">
+                    <select class="form-select" name="asignatura" id="asignatura">
+                        <option selected disabled>Seleccione la Asignatura</option>
+                        <?php
+                        foreach($asignatura as $asignaturas){ 
+                        echo "<option value='".$asignaturas['Asignatura']."'>".$asignaturas['Asignatura']."</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+              </div>
+            </div>
+
+      <div class="col-sm-3">
+            <div class="form-group">
+          <input type="hidden" name="ID" id="ID" >
+          <input style="margin-top: 25px;"  type="submit"  class="btn btn-info" name="buscarNombre" id="button-addon2" value="Mostrar los alumnos">
+          <?php
+          echo '<a href="../pdf/alumnos_pdf.php?grado=&grupo=&ciclo=" style="margin-top: 25px;" class="btn btn-danger">Imprimir</a>';
+          ?>
+           </form>
+       </div>
+     </div>
+</div></div></div>
+
 
     <div class="collapse" id="collapseExample" style="margin-bottom: 0px; margin-top: 0px;">
       <div class="card card-body">
@@ -97,6 +166,7 @@ $alumno = $per->get_alumnos();
                 <div class="mb-3">
                 <select class="form-select" name="aprobado" id="aprobado">
                   <option selected>El alumno esta aprobado ?</option>
+                  <option value="Cursando">Cursando</option>
                   <option value="Si">Si</option>
                   <option value="No">No</option>
                 </select>
@@ -132,11 +202,37 @@ $alumno = $per->get_alumnos();
 </div>
 
             <?php
+
+            $grado = (isset($_POST['grado'])) ? $_POST['grado'] : '';
+            $grupo = (isset($_POST['grupo'])) ? $_POST['grupo'] : '';
+            $asignatura = (isset($_POST['asignatura'])) ? $_POST['asignatura'] : '';           
+
+
+echo $grado;
+echo $grupo;
+echo $asignatura;
+
             $table = new tablacuerpo();
-             $table->notas("SELECT N.id,A.id as Asi,AA.id as Alu, Asignatura, CONCAT(AA.Nombre,' ',AA.Apellido) as Alumno, Nota1,Nota2,Nota3,Promedio, Aprobado
+
+            if(isset($_POST['asignatura']) && isset($_POST['grado']) && isset($_POST['grupo']) ) { 
+             $table->notas("SELECT DISTINCT N.id,A.id as Asi,AA.id as Alu, G.id,Asignatura, CONCAT(AA.Nombre,' ',AA.Apellido) as Alumno, GG.grado, 
+             G.Grupo,G.Turno,G.Ciclo,Nota1,Nota2,Nota3,FORMAT(((Nota1+Nota2+Nota3)/3),2) as Promedio, Aprobado
                             from notas as N 
                             inner join asignatura as A on N.idasignatura=A.id
-                            inner join alumnos as AA on AA.id = N.idalumno",1,2);
+                            inner join grupo as G on G.id = A.idgrupo
+                            inner join grado as GG on GG.idgrupo = G.id
+                            inner join alumnos as AA on AA.id = N.idalumno
+                            where Asignatura = '$asignatura' and G.id = '$grupo' and G.grado = '$grado'",1,2);
+            }
+            else {
+              $table->notas("SELECT DISTINCT N.id,A.id as Asi,AA.id as Alu, G.id, Asignatura, CONCAT(AA.Nombre,' ',AA.Apellido) as Alumno, GG.grado, 
+              G.Grupo,G.Turno,G.Ciclo,Nota1,Nota2,Nota3,FORMAT(((Nota1+Nota2+Nota3)/3),2) as Promedio, Aprobado
+              from notas as N 
+              inner join asignatura as A on N.idasignatura=A.id
+              inner join grupo as G on G.id = A.idgrupo
+              inner join grado as GG on GG.idgrupo = G.id
+              inner join alumnos as AA on AA.id = N.idalumno ",1,2);
+            }
              ?>
 
 

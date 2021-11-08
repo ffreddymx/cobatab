@@ -167,13 +167,52 @@ function Footer()
 
     $conexion = Conectar::conexion();
 
+    $turno = $_GET['turno'];
+
+
+
+    if((!empty($_GET['grado']) || !empty($_GET['grupo']) || !empty($_GET['ciclo']))  ){ //check if form was submitted
+
+        $grado = (isset($_GET['grado'])) ? $_GET['grado'] : '';
+        $grupo = (isset($_GET['grupo'])) ? $_GET['grupo'] : '';
+        $ciclo = (isset($_GET['ciclo'])) ? $_GET['ciclo'] : '';
+
+            if(!empty($_GET['grado']) && !empty($_GET['grupo']) && !empty($_GET['ciclo'])) { 
+
+            $alumno=$conexion->query("SELECT I.id, Nombre,Apellido,Matricula, GG.grado as Grado,G.Grupo,G.Turno, G.Ciclo	
+            FROM `inscrito` as I 
+            INNER JOIN alumnos as A on I.idalumno = A.id
+            INNER JOIN grupo as G on I.idgrupo = G.id
+            INNER JOIN grado as GG on GG.idgrupo = G.id
+            WHERE G.Turno = '$turno' and G.Grupo = '$grupo' and Grado='$grado' and G.Ciclo = '$ciclo' ");
+            }
+            else { 
+            $alumno=$conexion->query("SELECT I.id, Nombre,Apellido,Matricula, GG.grado as Grado,G.Grupo,G.Turno, G.Ciclo	
+            FROM `inscrito` as I 
+            INNER JOIN alumnos as A on I.idalumno = A.id
+            INNER JOIN grupo as G on I.idgrupo = G.id
+            INNER JOIN grado as GG on GG.idgrupo = G.id
+            WHERE G.Turno = '$turno' and (G.Grupo = '$grupo' or Grado='$grado' or G.Ciclo = '$ciclo') ");
+            }
+
+      }  
+      else { 
+        $alumno=$conexion->query("SELECT I.id, Nombre,Apellido,Matricula, GG.grado as Grado,G.Grupo,G.Turno, G.Ciclo	
+       FROM `inscrito` as I 
+       INNER JOIN alumnos as A on I.idalumno = A.id
+       INNER JOIN grupo as G on I.idgrupo = G.id
+       INNER JOIN grado as GG on GG.idgrupo = G.id
+       WHERE G.Turno = '$turno' ");
+      }
+
+/*
     $alumno=$conexion->query("SELECT I.id, Nombre,Apellido,Matricula, GG.grado as Grado,G.Grupo,G.Turno, G.Ciclo	
     FROM `inscrito` as I 
     INNER JOIN alumnos as A on I.idalumno = A.id
     INNER JOIN grupo as G on I.idgrupo = G.id
     INNER JOIN grado as GG on GG.idgrupo = G.id
     WHERE G.Turno = 'Matutino' ");
-
+*/
     $pdf->Ln(10);
 
      $pdf->SetWidths(array(50,50,50,50));
