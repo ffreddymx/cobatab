@@ -18,15 +18,24 @@ class personas_model{
     }
 
 
+    public function get_buscar($alumno){
+        $consulta=$this->db->query("SELECT * from alumnos where Nombre like '$alumno' or Matricula = '$alumno' ");
+        while($filas=$consulta->fetch()){
+            $this->personas[]=$filas;
+        }
+        return $this->personas;
+    }
+
+
     public function saveAlumno($datos){
 
-    $this->db->exec("INSERT INTO alumnos(Nombre,Apellido,Matricula,Tutor,Direccion) values('$datos[0]','$datos[1]','$datos[5]','$datos[6]','$datos[2]')");
+    $this->db->exec("INSERT INTO alumnos(Nombre,Apellido,Direccion,Movil,Email,Matricula) values('$datos[0]','$datos[1]','$datos[2]','$datos[3]','$datos[4]','$datos[5]')");
     
     }
 
     public function updateAlumno($datos){
 
-        $this->db->exec("UPDATE alumnos set Nombre='$datos[0]',Apellido='$datos[1]',Matricula='$datos[5]',Tutor='$datos[6]',Direccion='$datos[2]' where id = '$datos[7]'  ");
+        $this->db->exec("UPDATE alumnos set Nombre='$datos[0]',Apellido='$datos[1]',Direccion='$datos[2]',Movil='$datos[3]', Email='$datos[4]', Matricula='$datos[5]' where id = '$datos[6]'  ");
         
     }
 

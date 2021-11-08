@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-11-2021 a las 02:57:09
+-- Tiempo de generación: 08-11-2021 a las 19:06:42
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.2.29
 
@@ -32,17 +32,19 @@ CREATE TABLE `alumnos` (
   `Nombre` varchar(30) NOT NULL,
   `Apellido` varchar(30) NOT NULL,
   `Matricula` varchar(30) NOT NULL,
-  `Tutor` varchar(100) NOT NULL,
-  `Direccion` varchar(200) NOT NULL
+  `Direccion` varchar(200) NOT NULL,
+  `Movil` varchar(10) NOT NULL,
+  `Email` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `alumnos`
 --
 
-INSERT INTO `alumnos` (`id`, `Nombre`, `Apellido`, `Matricula`, `Tutor`, `Direccion`) VALUES
-(1, 'Ernesto Zedillo', 'Ponce de Leon', '1PB20028', 'Salinas de Gortari', 'Las Lomas DF'),
-(15, 'Benito', 'Juarez', '123fggg', '', 'El derecho al respeto ajeno es la paz');
+INSERT INTO `alumnos` (`id`, `Nombre`, `Apellido`, `Matricula`, `Direccion`, `Movil`, `Email`) VALUES
+(1, 'Ernesto Zedillo', 'Ponce de Leon', '1PB20028', 'Las Lomas DF', '', ''),
+(15, 'Benito', 'Juarez', '123fggg', 'El derecho al respeto ajeno es la paz', '', ''),
+(17, 'Jorge Luis', 'Aguilar de la Cruz', '20B0220034', 'Conocida', '9932840160', 'jorge@google.com');
 
 -- --------------------------------------------------------
 
@@ -107,7 +109,34 @@ CREATE TABLE `grupo` (
 INSERT INTO `grupo` (`id`, `Grupo`, `Turno`, `Ciclo`) VALUES
 (1, 'A', 'Matutino', '2019-2022'),
 (12, 'B', 'Matutino', '2019-2022'),
-(13, 'C', 'Vespertino', '2022-2025');
+(13, 'C', 'Vespertino', '2022-2025'),
+(14, 'C', 'Matutino', '2022-2025');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `inscrito`
+--
+
+CREATE TABLE `inscrito` (
+  `id` int(11) NOT NULL,
+  `idalumno` int(11) NOT NULL,
+  `idgrupo` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `inscrito`
+--
+
+INSERT INTO `inscrito` (`id`, `idalumno`, `idgrupo`) VALUES
+(5, 1, 13),
+(6, 17, 12),
+(9, 15, 12),
+(14, 15, 13),
+(16, 17, 1),
+(17, 0, 0),
+(18, 0, 0),
+(19, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -131,7 +160,8 @@ CREATE TABLE `notas` (
 --
 
 INSERT INTO `notas` (`id`, `idasignatura`, `idalumno`, `Nota1`, `Nota2`, `Nota3`, `Promedio`, `Aprobado`) VALUES
-(1, 1, 1, 8, 0, 0, 0, 'No');
+(1, 1, 1, 8, 8, 8, 0, 'Si'),
+(2, 4, 1, 0, 0, 0, 0, 'El');
 
 -- --------------------------------------------------------
 
@@ -221,6 +251,12 @@ ALTER TABLE `grupo`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `inscrito`
+--
+ALTER TABLE `inscrito`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `notas`
 --
 ALTER TABLE `notas`
@@ -248,13 +284,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT de la tabla `alumnos`
 --
 ALTER TABLE `alumnos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `asignatura`
 --
 ALTER TABLE `asignatura`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `grado`
@@ -266,13 +302,19 @@ ALTER TABLE `grado`
 -- AUTO_INCREMENT de la tabla `grupo`
 --
 ALTER TABLE `grupo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT de la tabla `inscrito`
+--
+ALTER TABLE `inscrito`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `profesor`

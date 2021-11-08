@@ -70,14 +70,6 @@ require_once 'dependencias.php';//parte del codigo html principal
               </div>
             </div>
 
-              <div class="col-sm-3">
-                <div class="form-group">
-                  <label>Tutor</label>
-                  <input type="text" class="form-control" id="tutor" name="tutor" maxlength="40"
- placeholder="tutor"   >
-              </div>
-            </div>
-
 
       <div class="col-sm-3">
             <div class="form-group">
@@ -99,6 +91,8 @@ require_once 'dependencias.php';//parte del codigo html principal
 </div>
          <span id="xAlumno" data-toggle="collapse"  class="btn btn-danger">Eliminar Alumno</span>
          <a   data-toggle="collapse" href="#xAlumno" class="btn btn-success">Cancelar</a>
+
+
   </form>
   </div>
 </div>

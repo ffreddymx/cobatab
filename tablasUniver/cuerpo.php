@@ -28,7 +28,7 @@ public function alumnos($a,$link)
                   $this->target[] = $key;
                }
   
-               echo "<th>Modificar</th><th>Eliminar</th>";
+               echo "<th colspan='2' style='width:50px;' >Acciones</th>";
                echo '</tr></thead><tbody border="1">';
 
                 foreach ( $this->alumnos as $r ) {
@@ -40,8 +40,8 @@ public function alumnos($a,$link)
                 }
                 if($link!=0){
                   ?>
-            <td><a class="btn btn-info btn-sm" aria-controls="collapseExample" data-toggle="collapse" href="#collapseExample" data-role="updateAlumno" data-id="<?php echo $r['id']; ?>">Modificar</a></td>     
-            <td><a class="btn btn-danger btn-sm" aria-controls="xAlumno" data-toggle="collapse" href="#xAlumno" data-role="xAlumno" data-id="<?php echo $r['id']; ?>">Eliminar</a></td>        
+            <td style='width:30px;'><a class="btn btn-info btn-sm" aria-controls="collapseExample" data-toggle="collapse" href="#collapseExample" data-role="updateAlumno" data-id="<?php echo $r['id']; ?>"><i class="fas fa-edit"></i></a></td>     
+            <td style='width:30px;'><a class="btn btn-danger btn-sm" aria-controls="xAlumno" data-toggle="collapse" href="#xAlumno" data-role="xAlumno" data-id="<?php echo $r['id']; ?>"><i class="fas fa-trash-alt"></i></a></td>        
              <?php       
                    } 
                 echo '</tr>';
@@ -64,7 +64,7 @@ public function alumnos($a,$link)
                   $this->target[] = $key;
                }
   
-               echo "<th>Modificar</th><th>Eliminar</th>";
+               echo "<th colspan='2' style='width:50px;' >Acciones</th>";
                echo '</tr></thead><tbody border="1">';
 
                 foreach ( $this->alumnos as $r ) {
@@ -76,8 +76,8 @@ public function alumnos($a,$link)
                 }
                 if($link!=0){
                   ?>
-            <td><a class="btn btn-info btn-sm" aria-controls="collapseExample" data-toggle="collapse" href="#collapseExample" data-role="updateAlumno" data-id="<?php echo $r['id']; ?>">Modificar</a></td>     
-            <td><a class="btn btn-danger btn-sm" aria-controls="xAlumno" data-toggle="collapse" href="#xAlumno" data-role="xAlumno" data-id="<?php echo $r['id']; ?>">Eliminar</a></td>        
+            <td style="width:30px;"><a class="btn btn-info btn-sm" aria-controls="collapseExample" data-toggle="collapse" href="#collapseExample" data-role="updateAlumno" data-id="<?php echo $r['id']; ?>"><i class="fas fa-edit"></a></td>     
+            <td style="width:30px;"><a class="btn btn-danger btn-sm" aria-controls="xAlumno" data-toggle="collapse" href="#xAlumno" data-role="xAlumno" data-id="<?php echo $r['id']; ?>"><i class="fas fa-trash-alt"></i></a></td>        
              <?php       
                    } 
                 echo '</tr>';
@@ -100,7 +100,7 @@ public function alumnos($a,$link)
                 echo'<th>' . ($key) . '</th>';
                 $this->target[] = $key;
              }
-             echo "<th style='width:100px;'>Modificar</th><th style='width:100px;'>Eliminar</th>";
+             echo "<th colspan='2' style='width:50px;' >Acciones</th>";
              echo '</tr></thead><tbody border="1">';
 
               foreach ( $this->alumnos as $r ) {
@@ -112,8 +112,8 @@ public function alumnos($a,$link)
               }
               if($link!=0){
                 ?>
-          <td><a style="width:100px;" class="btn btn-info btn-sm" aria-controls="collapseExample" data-toggle="collapse" href="#collapseExample" data-role="updateAlumno" data-id="<?php echo $r['id']; ?>">Modificar</a></td>     
-          <td><a style="width:100px;" class="btn btn-danger btn-sm" aria-controls="xAlumno" data-toggle="collapse" href="#collapselumno" data-role="xAlumno" data-id="<?php echo $r['id']; ?>">Eliminar</a></td>        
+          <td style="width:30px;"><a class="btn btn-info btn-sm" aria-controls="collapseExample" data-toggle="collapse" href="#collapseExample" data-role="updateAlumno" data-id="<?php echo $r['id']; ?>"><i class="fas fa-edit"></a></td>     
+          <td style="width:30px;"><a class="btn btn-danger btn-sm" aria-controls="xAlumno" data-toggle="collapse" href="#collapselumno" data-role="xAlumno" data-id="<?php echo $r['id']; ?>"><i class="fas fa-trash-alt"></i></a></td>        
            <?php       
                  } 
               echo '</tr>';
@@ -141,7 +141,7 @@ public function grado($a,$link,$oculto)
               $this->target[] = $key;
               $i++;
            }
-           echo "<th style='width:100px;'>Modificar</th><th style='width:100px;'>Eliminar</th>";
+           echo "<th colspan='2' style='width:50px;' >Acciones</th>";
            echo '</tr></thead><tbody border="1">';
             foreach ( $this->alumnos as $r ) {
              echo '<tr id='.$r["id"].'>';
@@ -156,8 +156,8 @@ public function grado($a,$link,$oculto)
             }
             if($link!=0){
               ?>
-        <td><a style="width:100px;" class="btn btn-info btn-sm" aria-controls="collapseExample" data-toggle="collapse" href="#collapseExample" data-role="updateAlumno" data-id="<?php echo $r['id']; ?>">Modificar</a></td>     
-        <td><a style="width:100px;" class="btn btn-danger btn-sm" aria-controls="xAlumno" data-toggle="collapse" href="#collapselumno" data-role="xAlumno" data-id="<?php echo $r['id']; ?>">Eliminar</a></td>        
+        <td style="width:30px;" ><a  class="btn btn-info btn-sm" aria-controls="collapseExample" data-toggle="collapse" href="#collapseExample" data-role="updateAlumno" data-id="<?php echo $r['id']; ?>"><i class="fas fa-edit"></i></a></td>     
+        <td style="width:30px;"><a  class="btn btn-danger btn-sm" aria-controls="xAlumno" data-toggle="collapse" href="#collapselumno" data-role="xAlumno" data-id="<?php echo $r['id']; ?>"><i class="fas fa-trash-alt"></i></a></td>        
          <?php       
                } 
             echo '</tr>';
@@ -184,7 +184,7 @@ public function asignatura($a,$link,$oculto)
               $this->target[] = $key;
               $i++;
            }
-           echo "<th style='width:100px;'>Modificar</th><th style='width:100px;'>Eliminar</th>";
+           echo "<th colspan='2' style='width:50px;' >Acciones</th>";
            echo '</tr></thead><tbody border="1">';
             foreach ( $this->alumnos as $r ) {
              echo '<tr id='.$r["id"].'>';
@@ -199,8 +199,8 @@ public function asignatura($a,$link,$oculto)
             }
             if($link!=0){
               ?>
-        <td><a style="width:100px;" class="btn btn-info btn-sm" aria-controls="collapseExample" data-toggle="collapse" href="#collapseExample" data-role="updateAlumno" data-id="<?php echo $r['id']; ?>">Modificar</a></td>     
-        <td><a style="width:100px;" class="btn btn-danger btn-sm" aria-controls="xAlumno" data-toggle="collapse" href="#collapselumno" data-role="xAlumno" data-id="<?php echo $r['id']; ?>">Eliminar</a></td>        
+        <td style="width:30px;" ><a class="btn btn-info btn-sm" aria-controls="collapseExample" data-toggle="collapse" href="#collapseExample" data-role="updateAlumno" data-id="<?php echo $r['id']; ?>"><i class="fas fa-edit"></a></td>     
+        <td style="width:30px;" ><a class="btn btn-danger btn-sm" aria-controls="xAlumno" data-toggle="collapse" href="#collapselumno" data-role="xAlumno" data-id="<?php echo $r['id']; ?>"><i class="fas fa-trash-alt"></i></a></td>        
          <?php       
                } 
             echo '</tr>';
@@ -209,8 +209,7 @@ public function asignatura($a,$link,$oculto)
 }
 
 
-//==============================================================asignatura
-
+//==============================================================nota
 public function notas($a,$link,$oculto)
 {           
   $consulta = $this->db->query($a);
@@ -228,7 +227,7 @@ public function notas($a,$link,$oculto)
               $this->target[] = $key;
               $i++;
            }
-           echo "<th style='width:100px;'>Modificar</th><th style='width:100px;'>Eliminar</th>";
+           echo "<th colspan='2' style='width:50px;' >Acciones</th>";
            echo '</tr></thead><tbody border="1">';
             foreach ( $this->alumnos as $r ) {
              echo '<tr id='.$r["id"].'>';
@@ -243,8 +242,8 @@ public function notas($a,$link,$oculto)
             }
             if($link!=0){
               ?>
-        <td><a style="width:100px;" class="btn btn-info btn-sm" aria-controls="collapseExample" data-toggle="collapse" href="#collapseExample" data-role="updateAlumno" data-id="<?php echo $r['id']; ?>">Modificar</a></td>     
-        <td><a style="width:100px;" class="btn btn-danger btn-sm" aria-controls="xAlumno" data-toggle="collapse" href="#collapselumno" data-role="xAlumno" data-id="<?php echo $r['id']; ?>">Eliminar</a></td>        
+        <td style="width:30px;"><a  class="btn btn-info btn-sm" aria-controls="collapseExample" data-toggle="collapse" href="#collapseExample" data-role="updateAlumno" data-id="<?php echo $r['id']; ?>"><i class="fas fa-edit"></i></a></td>     
+        <td style="width:30px;"><a  class="btn btn-danger btn-sm" aria-controls="xAlumno" data-toggle="collapse" href="#collapselumno" data-role="xAlumno" data-id="<?php echo $r['id']; ?>"><i class="fas fa-trash-alt"></i></a></td>        
          <?php       
                } 
             echo '</tr>';
@@ -252,6 +251,47 @@ public function notas($a,$link,$oculto)
     echo '</tbody> </table>';
 }
 
+
+//==============================================================inscribir
+public function inscribir($a,$link,$oculto)
+{           
+  $consulta = $this->db->query($a);
+  while($filas = $consulta->fetch(PDO::FETCH_ASSOC) ){
+    $this->alumnos[] = $filas;
+  }
+  echo "<table class='table table-sm table-hover'><thead class='thead-dark'><tr> ";//iniciamos la tabla
+
+    $i=0;//para ocultar las columnas
+    foreach($this->alumnos[0] as $key=>$value){
+              if($i<=$oculto)
+              echo'<th style="display:none;">' . ($key) . '</th>';
+              else 
+              echo'<th >' . ($key) . '</th>';
+              $this->target[] = $key;
+              $i++;
+           }
+           echo "<th style='width:50px;'>Inscribir</th>";
+           echo '</tr></thead><tbody border="1">';
+            foreach ( $this->alumnos as $r ) {
+             echo '<tr id='.$r["id"].'>';
+             $i = 0;
+                foreach ( $r as $v ) {
+                  if($i<=$oculto)
+                  echo '<td style="display:none;" data-target="'.$this->target[$i].'">'.$v.'</td>';
+                  else
+                  echo '<td data-target="'.$this->target[$i].'">'.$v.'</td>';
+   
+                  $i++;
+            }
+            if($link!=0){
+              ?>
+        <td style="width:30px;" align="center" ><a  class="btn btn-info btn-sm" aria-controls="collapseExample" data-toggle="collapse" href="#collapseExample" data-role="updateAlumno" data-id="<?php echo $r['id']; ?>"><i class="fas fa-atlas"></i></a></td>     
+         <?php       
+               } 
+            echo '</tr>';
+            }
+    echo '</tbody> </table>';
+}
 
 }
 

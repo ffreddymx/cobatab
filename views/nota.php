@@ -35,7 +35,7 @@ $alumno = $per->get_alumnos();
   
             <label>Asignatura</label>
                 <div class="mb-3">
-                    <select class="form-select" name="grupo" id="grupo">
+                    <select class="form-select" name="asignatura" id="asignatura">
                         <option selected>Seleccione la Asignatura</option>
                         <?php
                         foreach($asignatura as $asignaturas){ 
@@ -53,7 +53,7 @@ $alumno = $per->get_alumnos();
              <div class="form-group">
               <label>Alumnos</label>
                 <div class="mb-3">
-                    <select class="form-select" name="grupo" id="grupo">
+                    <select class="form-select" name="alumno" id="alumno">
                         <option selected>Seleccione el Alumno</option>
                         <?php
                         foreach($alumno as $alumnos){ 
@@ -120,10 +120,10 @@ $alumno = $per->get_alumnos();
   <div class="card card-body ">
   <form id="formXAlumno" >
 <div class="alert alert-danger" role="alert">
-  Confirme si desea eliminar la Asignatura ?
+  Confirme si desea eliminar la Calificación ?
   <input type="hidden" name="IDx" id="IDx" class="form-control">
 </div>
-         <span id="xAlumno" data-toggle="collapse"  class="btn btn-danger">Eliminar Asignatura</span>
+         <span id="xAlumno" data-toggle="collapse"  class="btn btn-danger">Eliminar Calificación</span>
          <a data-toggle="collapse" href="#collapselumno"  class="btn btn-success">Cancelar</a>
 
   </form>
@@ -133,10 +133,10 @@ $alumno = $per->get_alumnos();
 
             <?php
             $table = new tablacuerpo();
-             $table->notas("SELECT N.id, Asignatura, CONCAT(AA.Nombre,' ',AA.Apellido) as Alumno, Nota1,Nota2,Nota3,Promedio, Aprobado
+             $table->notas("SELECT N.id,A.id as Asi,AA.id as Alu, Asignatura, CONCAT(AA.Nombre,' ',AA.Apellido) as Alumno, Nota1,Nota2,Nota3,Promedio, Aprobado
                             from notas as N 
                             inner join asignatura as A on N.idasignatura=A.id
-                            inner join alumnos as AA on AA.id = N.idalumno",1,0);
+                            inner join alumnos as AA on AA.id = N.idalumno",1,2);
              ?>
 
 
@@ -155,9 +155,9 @@ $alumno = $per->get_alumnos();
             $.ajax({
               type:"POST",
               data:datos,
-              url:"../controllers/asignatura/save.php",
+              url:"../controllers/nota/save.php",
               success:function(data){
-                  window.location="../views/asignatura.php";
+                  window.location="../views/nota.php";
                  }
             }); 
 
@@ -167,9 +167,9 @@ $alumno = $per->get_alumnos();
             $.ajax({
               type:"POST",
               data:datos,
-              url:"../controllers/asignatura/update.php",
+              url:"../controllers/nota/update.php",
               success:function(data){
-                  window.location="../views/asignatura.php";
+                  window.location="../views/nota.php";
                  }
             }); 
              }
@@ -179,16 +179,26 @@ $alumno = $per->get_alumnos();
           $(document).on('click','a[data-role=updateAlumno]',function(){
 
                 var id  = $(this).data('id');
-                var asignatura  = $('#'+id).children('td[data-target=Asignatura]').text();
-                var grupo  = $('#'+id).children('td[data-target=Grup]').text();
+                var asignatura  = $('#'+id).children('td[data-target=Asi]').text();
+                var alumno  = $('#'+id).children('td[data-target=Alu]').text();
+                var nota1  = $('#'+id).children('td[data-target=Nota1]').text();
+                var nota2  = $('#'+id).children('td[data-target=Nota2]').text();
+                var nota3  = $('#'+id).children('td[data-target=Nota3]').text();
+                var aprobado  = $('#'+id).children('td[data-target=Aprobado]').text();
            
                 var opc = 1;
 
                 $('#ID').val(id);
-                $('#asignatura').val(asignatura);               
+                //$('#asignatura').val(asignatura);               
                 $('#opc').val(opc);
+                $('#nota1').val(nota1);
+                $('#nota2').val(nota2);
+                $('#nota3').val(nota3);
 
-                $('#grupo > option[value="'+grupo+'"]').attr('selected', 'selected');
+                $('#asignatura > option[value="'+asignatura+'"]').attr('selected', 'selected');
+                $('#alumno > option[value="'+alumno+'"]').attr('selected', 'selected');
+                $('#aprobado > option[value="'+aprobado+'"]').attr('selected', 'selected');
+
 
 
           });
@@ -206,9 +216,9 @@ $alumno = $per->get_alumnos();
               $.ajax({
                 type:"POST",
                 data:datos,
-                url:"../controllers/asignatura/delete.php",
+                url:"../controllers/nota/delete.php",
                 success:function(data){
-                    window.location="../views/asignatura.php";
+                    window.location="../views/nota.php";
                   }
               }); 
           });

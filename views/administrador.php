@@ -13,6 +13,7 @@ require_once 'dependencias.php';//parte del codigo html principal
   <a href="grado.php" class="list-group-item list-group-item-action">Grado</a>
   <a href="asignatura.php" class="list-group-item list-group-item-action">Asignaturas</a>
   <a href="nota.php" class="list-group-item list-group-item-action">Calificaciones</a>
+  <a href="inscribir.php" class="list-group-item list-group-item-action">Inscripciones / Reinscripción</a>
 </div>
 
 

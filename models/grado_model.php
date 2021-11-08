@@ -18,6 +18,16 @@ class Grado_model{
     }
 
 
+    public function get_gradounique(){
+        $consulta=$this->db->query("SELECT DISTINCT grado from grado");
+        while($filas=$consulta->fetch()){
+            $this->personas[]=$filas;
+        }
+        return $this->personas;
+    }
+
+
+
     public function saveGrado($datos){
 
         $this->db->exec("INSERT INTO grado(grado,idgrupo,idprofesor) values('$datos[0]','$datos[1]','$datos[2]')");

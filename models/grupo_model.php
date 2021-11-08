@@ -20,6 +20,17 @@ class Grupo_model{
     }
 
 
+    public function get_grupounique(){
+        $consulta=$this->db->query("SELECT DISTINCT Grupo from grupo");
+        //$resultado = $consulta->fetch();
+        while($filas=$consulta->fetch()){
+            $this->grupo[]=$filas;
+        }
+        return $this->grupo;
+        //return $resultado;
+    }
+
+
     public function saveGrupo($datos){
 
         $this->db->exec("INSERT INTO grupo(Grupo,Turno,Ciclo) values('$datos[0]','$datos[1]','$datos[2]')");

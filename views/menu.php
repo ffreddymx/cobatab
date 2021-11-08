@@ -12,8 +12,8 @@
             <div class='dashboard-nav-dropdown'><a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i
                     class="fas fa-photo-video"></i> Grupos </a>
                 <div class='dashboard-nav-dropdown-menu'>
-                    <a href="#"class="dashboard-nav-dropdown-item">Matutino</a>
-                    <a href="#"class="dashboard-nav-dropdown-item">Vespertino</a>
+                    <a href="grupos.php?turno=Matutino"class="dashboard-nav-dropdown-item">Matutino</a>
+                    <a href="grupos.php?turno=Vespertino"class="dashboard-nav-dropdown-item">Vespertino</a>
                     </div>
             </div>
             <div class='dashboard-nav-dropdown'><a href="nota.php" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i
