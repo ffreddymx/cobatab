@@ -21,7 +21,10 @@ $alumno = $per->get_alumnos();
       <form id="formBuscar" action="" method="POST"  >
       <div class="input-group mb-3">
         <input type="text" class="form-control" name="Balumno"   placeholder="Nombre del alumno o Matrícula" aria-label="Recipient's username" aria-describedby="button-addon2">
-        <input type="submit"  class="btn btn-danger" name="buscarNombre" id="button-addon2" value="Buscar Alumno">
+        <input type="submit"  class="btn btn-info" name="buscarNombre" id="button-addon2" value="Buscar Alumno">
+        <?php
+          echo '<a href="../pdf/aprobados_pdf.php" class="btn btn-danger">Imprimir</a>';
+          ?>
       </div>
   </form>
 

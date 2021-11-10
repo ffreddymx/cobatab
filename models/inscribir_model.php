@@ -24,6 +24,12 @@ class Inscribir_model{
     public function saveInscribir($datos){
 
         $this->db->exec("INSERT INTO inscrito(idalumno,idgrupo) values('$datos[0]','$datos[1]')");
+
+        //asignamos las materias al alumno
+        $asignaturas=$this->db->query("SELECT id from asignatura where idgrupo = '$datos[1]' ");
+        while($filas=$asignaturas->fetch()){
+            $this->db->exec("INSERT INTO notas(idasignatura,idalumno,Aprobado) values('$filas[0]','$datos[0]','Cursando')");
+        }
     
     }
 

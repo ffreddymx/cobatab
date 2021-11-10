@@ -11,17 +11,18 @@ $asignatura = $per->get_asignatura();
 
 $per=new personas_model();
 $alumno = $per->get_alumnos();
-
-
 ?>
 
 
 <p class="lead" style="margin-top: 0px; background:#DAF7A6;" ><b>Alumnos Irregulares con Adeudo de Asignaturas </b></p> <hr class="my-1" >
 
       <form id="formBuscar" action="" method="POST"  >
-      <div class="input-group mb-3">
+      <div class="input-group mb-2">
         <input type="text" class="form-control" name="Balumno"   placeholder="Nombre del alumno o Matrícula" aria-label="Recipient's username" aria-describedby="button-addon2">
-        <input type="submit"  class="btn btn-danger" name="buscarNombre" id="button-addon2" value="Buscar Alumno">
+        <input type="submit"  class="btn btn-info" name="buscarNombre" id="button-addon2" value="Buscar Alumno">
+        <?php
+          echo '<a href="../pdf/irregulares_pdf.php" class="btn btn-danger">Imprimir</a>';
+          ?>
       </div>
   </form>
 

@@ -26,7 +26,7 @@ class Nota_model{
 
     public function updateNota($datos){
 
-        $this->db->exec("UPDATE notas set idasignatura='$datos[0]',idalumno='$datos[1]',Nota1='$datos[2]',Nota2='$datos[3]',Nota3='$datos[4]',Aprobado='$datos[5]' where id = '$datos[6]'  ");
+        $this->db->exec("UPDATE notas set Nota1='$datos[0]',Nota2='$datos[1]',Nota3='$datos[2]',Aprobado='$datos[3]' where id = '$datos[4]'  ");
         
     }
 

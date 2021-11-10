@@ -19,7 +19,7 @@ $turno = $_GET['turno'];
 
 ?>
 
-<p class="lead" style="margin-top: 0px" >Alumnos Inscritos en el Turno Matutino</p> <hr class="my-1" >
+<p class="lead" style="margin-top: 0px" >Alumnos Inscritos en el Turno <?php echo $turno; ?>  </p> <hr class="my-1" >
 
       <div class="card card-body">
           <div class="row">
@@ -111,16 +111,16 @@ $turno = $_GET['turno'];
 
                   if(!empty($_POST['grado']) && !empty($_POST['grupo']) && !empty($_POST['ciclo'])) { 
 
-                  $table->inscribir("SELECT I.id, Nombre,Apellido,Matricula, GG.grado as Grado,G.Grupo,G.Turno, G.Ciclo	
-                  FROM `inscrito` as I 
+                  $table->matutinovespertino("SELECT I.id, Nombre,Apellido,Matricula, GG.grado as Grado,G.Grupo,G.Turno, G.Ciclo	
+                  FROM inscrito as I 
                   INNER JOIN alumnos as A on I.idalumno = A.id
                   INNER JOIN grupo as G on I.idgrupo = G.id
                   INNER JOIN grado as GG on GG.idgrupo = G.id
                   WHERE G.Turno = '$turno' and G.Grupo = '$grupo' and Grado='$grado' and G.Ciclo = '$ciclo' " ,1,0);
                   }
                   else { 
-                  $table->inscribir("SELECT I.id, Nombre,Apellido,Matricula, GG.grado as Grado,G.Grupo,G.Turno, G.Ciclo	
-                  FROM `inscrito` as I 
+                  $table->matutinovespertino("SELECT I.id, Nombre,Apellido,Matricula, GG.grado as Grado,G.Grupo,G.Turno, G.Ciclo	
+                  FROM inscrito as I 
                   INNER JOIN alumnos as A on I.idalumno = A.id
                   INNER JOIN grupo as G on I.idgrupo = G.id
                   INNER JOIN grado as GG on GG.idgrupo = G.id
@@ -129,8 +129,8 @@ $turno = $_GET['turno'];
 
             }  
             else { 
-             $table->inscribir("SELECT I.id, Nombre,Apellido,Matricula, GG.grado as Grado,G.Grupo,G.Turno, G.Ciclo	
-             FROM `inscrito` as I 
+             $table->matutinovespertino("SELECT I.id, Nombre,Apellido,Matricula, GG.grado as Grado,G.Grupo,G.Turno, G.Ciclo	
+             FROM inscrito as I 
              INNER JOIN alumnos as A on I.idalumno = A.id
              INNER JOIN grupo as G on I.idgrupo = G.id
              INNER JOIN grado as GG on GG.idgrupo = G.id

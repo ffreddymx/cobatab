@@ -121,14 +121,13 @@ function Header()
 
 $this->Image('../statics/logo.jpg',7,4,40,30);
 //$this->Image('img/logo' ,240,5,25,20);
-$turno = $_GET['turno'];
 
     $this->SetFont('Arial','B',12);
     $this->SetXY(70,16);
     $this->Cell(10,6,utf8_decode("COLEGIO DE BACHILLERES DE TABASCO"),0,1,'L');
-    $this->SetFont('Arial','',9);
+    $this->SetFont('Arial','B',9);
     $this->SetXY(90,20);
-    $this->Cell(0,6,utf8_decode("Lista de Alumnos del Turno ".$turno),0,1,'L');
+    $this->Cell(0,6,utf8_decode("LISTA DE ALUMNOS IRREGULARES"),0,1,'L');
     $this->SetFont('Arial','',9);
     $this->SetXY(70,23);
     $this->Cell(0,6,utf8_decode("PLANTEL NO. 11"),0,1,'L');
@@ -168,9 +167,7 @@ function Footer()
 
     $conexion = Conectar::conexion();
 
-    $turno = $_GET['turno'];
-
-
+   // $turno = $_GET['turno'];
 
     if((!empty($_GET['grado']) || !empty($_GET['grupo']) || !empty($_GET['ciclo']))  ){ //check if form was submitted
 
@@ -180,7 +177,7 @@ function Footer()
 
             if(!empty($_GET['grado']) && !empty($_GET['grupo']) && !empty($_GET['ciclo'])) { 
 
-            $alumno=$conexion->query("SELECT CONCAT(Nombre,' ',Apellido) AS Alumno,Matricula, GG.grado as Grado,G.Grupo,G.Turno, G.Ciclo	
+            $alumno=$conexion->query("SELECT I.id, Nombre,Apellido,Matricula, GG.grado as Grado,G.Grupo,G.Turno, G.Ciclo	
             FROM `inscrito` as I 
             INNER JOIN alumnos as A on I.idalumno = A.id
             INNER JOIN grupo as G on I.idgrupo = G.id
@@ -188,7 +185,7 @@ function Footer()
             WHERE G.Turno = '$turno' and G.Grupo = '$grupo' and Grado='$grado' and G.Ciclo = '$ciclo' ");
             }
             else { 
-            $alumno=$conexion->query("SELECT CONCAT(Nombre,' ',Apellido) AS Alumno,Matricula, GG.grado as Grado,G.Grupo,G.Turno, G.Ciclo	
+            $alumno=$conexion->query("SELECT I.id, Nombre,Apellido,Matricula, GG.grado as Grado,G.Grupo,G.Turno, G.Ciclo	
             FROM `inscrito` as I 
             INNER JOIN alumnos as A on I.idalumno = A.id
             INNER JOIN grupo as G on I.idgrupo = G.id
@@ -198,29 +195,30 @@ function Footer()
 
       }  
       else { 
-        $alumno=$conexion->query("SELECT CONCAT(Nombre,' ',Apellido) AS Alumno,Matricula, GG.grado as Grado,G.Grupo,G.Turno, G.Ciclo	
-       FROM `inscrito` as I 
-       INNER JOIN alumnos as A on I.idalumno = A.id
-       INNER JOIN grupo as G on I.idgrupo = G.id
-       INNER JOIN grado as GG on GG.idgrupo = G.id
-       WHERE G.Turno = '$turno' ");
+        $alumno=$conexion->query("SELECT DISTINCT  Asignatura,AA.Matricula,  
+        CONCAT(AA.Nombre,' ',AA.Apellido) as Alumno,GG.Grado,G.Grupo, Nota1,Nota2,Nota3,
+        FORMAT(((Nota1+Nota2+Nota3)/3),2) as Promedio, Aprobado
+        from notas as N 
+        inner join asignatura as A on N.idasignatura=A.id
+        inner join grupo as G on G.id = A.idgrupo
+        inner join Grado as GG on GG.idgrupo = G.id
+        inner join alumnos as AA on AA.id = N.idalumno 
+        where N.Aprobado = 'No' ");
       }
 
-
     $pdf->Ln(10);
-
-     $pdf->SetWidths(array(30,80,20,20,20,20));
+     $pdf->SetWidths(array(40,20,50,20,12,12,12,12,20));
      $pdf->SetFont('Arial','B',9,'L');
      $pdf->SetFillColor(1,113,185);//color blanco rgb
      $pdf->SetTextColor(255);
      $pdf->SetLineWidth(.3);
     for($i=0;$i<1;$i++)
             {
-                $pdf->Row(array(utf8_decode('Matricula'),utf8_decode('Alumno'),'Grado','Grupo','Turno','Ciclo'),'L');
+                $pdf->Row(array(utf8_decode('Asignatura'),('Matricula'),utf8_decode('Alumno'),('Grado'),'Grupo','Nota1','Nota2','Nota3','Promedio'),'L');
             }
 
     //***************-------------------------encabezados de las tablas
-    $pdf->SetWidths(array(30,80,20,20,20,20));
+    $pdf->SetWidths(array(40,20,50,20,12,12,12,12,20));
     $pdf->SetFont('Arial','',10,'L');
   //  $pdf->SetFillColor(224,235,255);
     $pdf->SetFillColor(255,255,255);//color blanco rgb
@@ -229,7 +227,7 @@ function Footer()
     $pdf->SetFont('Arial','',8);
 
         foreach( $alumno as $alumnos ){
-        $pdf->Row(array($alumnos['Matricula'], utf8_decode($alumnos['Alumno']),$alumnos['Grado'],$alumnos['Grupo'],$alumnos['Turno'],$alumnos['Ciclo']),'L');
+        $pdf->Row(array( utf8_decode($alumnos['Asignatura']),($alumnos['Matricula']),utf8_decode($alumnos['Alumno']),$alumnos['Grado'],$alumnos['Grupo'],$alumnos['Nota1'],$alumnos['Nota2'],$alumnos['Nota2'],$alumnos['Promedio']),'L');
         }
 
 

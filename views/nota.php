@@ -15,7 +15,7 @@ $per=new personas_model();
 $alumno = $per->get_alumnos();
 
 $per=new Grupo_model();
-$grupo = $per->get_grupo();
+$grupo = $per->get_grupounique();
 
 $grad=new grado_model();
 $grado = $grad->get_gradounique();
@@ -32,18 +32,8 @@ $grado = $grad->get_gradounique();
                 <form id="formBuscar" action="" method="POST" >
                   <input type="hidden" name="opc" id="opc" value="0">
   
-                  <label>Grupo</label>
-                <div class="mb-3">
-                    <select class="form-select" name="grupo" id="grupo">
-                        <option selected disabled> Selecciones el Grupo</option>
-                        <?php
-                        foreach($grupo as $grupos){ 
-                        echo "<option value='".$grupos['id']."'>".$grupos['Grupo'].' '.$grupos['Turno'].' '.$grupos['Ciclo']."</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
-
+                  <label>Matrícula</label>
+          <input type="text" class="form-control" id="matricula" name="matricula" placeholder="Matrícula"  >
               </div>
             </div>
 
@@ -52,7 +42,7 @@ $grado = $grad->get_gradounique();
               <label>Grado</label>
                 <div class="mb-3">
                     <select class="form-select" name="grado" id="grado">
-                        <option selected disabled>Seleccione el Grado</option>
+                        <option selected disabled>Grado</option>
                         <?php
                         foreach($grado as $grados){ 
                         echo "<option value='".$grados['grado']."'>".$grados['grado']."</option>";
@@ -63,26 +53,11 @@ $grado = $grad->get_gradounique();
               </div>
             </div>
             
-            <div class="col-sm-2">
-             <div class="form-group">
-              <label>Asignatura</label>
-                <div class="mb-3">
-                    <select class="form-select" name="asignatura" id="asignatura">
-                        <option selected disabled>Seleccione la Asignatura</option>
-                        <?php
-                        foreach($asignatura as $asignaturas){ 
-                        echo "<option value='".$asignaturas['Asignatura']."'>".$asignaturas['Asignatura']."</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
-              </div>
-            </div>
+
 
       <div class="col-sm-3">
             <div class="form-group">
-          <input type="hidden" name="ID" id="ID" >
-          <input style="margin-top: 25px;"  type="submit"  class="btn btn-info" name="buscarNombre" id="button-addon2" value="Mostrar los alumnos">
+          <input style="margin-top: 25px;"  type="submit"  class="btn btn-info" name="buscarNombre" id="button-addon2" value="Mostrar Asignaturas">
           <?php
           echo '<a href="../pdf/alumnos_pdf.php?grado=&grupo=&ciclo=" style="margin-top: 25px;" class="btn btn-danger">Imprimir</a>';
           ?>
@@ -104,11 +79,11 @@ $grado = $grad->get_gradounique();
   
             <label>Asignatura</label>
                 <div class="mb-3">
-                    <select class="form-select" name="asignatura" id="asignatura">
+                    <select class="form-select" name="asignaturasx" id="asignaturasx">
                         <option selected>Seleccione la Asignatura</option>
                         <?php
                         foreach($asignatura as $asignaturas){ 
-                        echo "<option value='".$asignaturas['id']."'>".$asignaturas['Asignatura']."</option>";
+                        echo "<option value='".$asignaturas['Asignatura']."'>".$asignaturas['Asignatura']."</option>";
                         }
                         ?>
                     </select>
@@ -203,35 +178,29 @@ $grado = $grad->get_gradounique();
 
             <?php
 
+            $matricula = (isset($_POST['matricula'])) ? $_POST['matricula'] : '';
             $grado = (isset($_POST['grado'])) ? $_POST['grado'] : '';
-            $grupo = (isset($_POST['grupo'])) ? $_POST['grupo'] : '';
-            $asignatura = (isset($_POST['asignatura'])) ? $_POST['asignatura'] : '';           
-
-
-echo $grado;
-echo $grupo;
-echo $asignatura;
 
             $table = new tablacuerpo();
 
-            if(isset($_POST['asignatura']) && isset($_POST['grado']) && isset($_POST['grupo']) ) { 
-             $table->notas("SELECT DISTINCT N.id,A.id as Asi,AA.id as Alu, G.id,Asignatura, CONCAT(AA.Nombre,' ',AA.Apellido) as Alumno, GG.grado, 
-             G.Grupo,G.Turno,G.Ciclo,Nota1,Nota2,Nota3,FORMAT(((Nota1+Nota2+Nota3)/3),2) as Promedio, Aprobado
-                            from notas as N 
-                            inner join asignatura as A on N.idasignatura=A.id
-                            inner join grupo as G on G.id = A.idgrupo
-                            inner join grado as GG on GG.idgrupo = G.id
-                            inner join alumnos as AA on AA.id = N.idalumno
-                            where Asignatura = '$asignatura' and G.id = '$grupo' and G.grado = '$grado'",1,2);
+            if(isset($_POST['matricula']) && isset($_POST['grado']) ) { 
+             $table->notas("SELECT DISTINCT N.id,A.id as Asi,AA.id as Alu, G.id as Gru, AA.Matricula, CONCAT(AA.Nombre,' ',AA.Apellido) as Alumno, Asignatura,   
+             GG.grado as Grado,G.Grupo,G.Turno,G.Ciclo,Nota1,Nota2,Nota3,FORMAT(((Nota1+Nota2+Nota3)/3),2) as Promedio, Aprobado
+             from notas as N 
+             inner join asignatura as A on N.idasignatura=A.id
+             inner join grupo as G on G.id = A.idgrupo
+             inner JOIN grado as GG on GG.idgrupo = G.id
+             inner join alumnos as AA on AA.id = N.idalumno
+                            where AA.Matricula = '$matricula' and gg.grado = '$grado' ",1,3);
             }
             else {
-              $table->notas("SELECT DISTINCT N.id,A.id as Asi,AA.id as Alu, G.id, Asignatura, CONCAT(AA.Nombre,' ',AA.Apellido) as Alumno, GG.grado, 
-              G.Grupo,G.Turno,G.Ciclo,Nota1,Nota2,Nota3,FORMAT(((Nota1+Nota2+Nota3)/3),2) as Promedio, Aprobado
+              $table->notas("SELECT DISTINCT N.id,A.id as Asi,AA.id as Alu, G.id as Gru, AA.Matricula, CONCAT(AA.Nombre,' ',AA.Apellido) as Alumno,  Asignatura,  
+              GG.grado as Grado,G.Grupo,G.Turno,G.Ciclo,Nota1,Nota2,Nota3,FORMAT(((Nota1+Nota2+Nota3)/3),2) as Promedio, Aprobado
               from notas as N 
               inner join asignatura as A on N.idasignatura=A.id
               inner join grupo as G on G.id = A.idgrupo
-              inner join grado as GG on GG.idgrupo = G.id
-              inner join alumnos as AA on AA.id = N.idalumno ",1,2);
+              inner JOIN grado as GG on GG.idgrupo = G.id
+              inner join alumnos as AA on AA.id = N.idalumno",1,3);
             }
              ?>
 
@@ -275,7 +244,8 @@ echo $asignatura;
           $(document).on('click','a[data-role=updateAlumno]',function(){
 
                 var id  = $(this).data('id');
-                var asignatura  = $('#'+id).children('td[data-target=Asi]').text();
+
+                var asignatura  = $('#'+id).children('td[data-target=Asignatura]').text();
                 var alumno  = $('#'+id).children('td[data-target=Alu]').text();
                 var nota1  = $('#'+id).children('td[data-target=Nota1]').text();
                 var nota2  = $('#'+id).children('td[data-target=Nota2]').text();
@@ -283,7 +253,6 @@ echo $asignatura;
                 var aprobado  = $('#'+id).children('td[data-target=Aprobado]').text();
            
                 var opc = 1;
-
                 $('#ID').val(id);
                 //$('#asignatura').val(asignatura);               
                 $('#opc').val(opc);
@@ -291,7 +260,7 @@ echo $asignatura;
                 $('#nota2').val(nota2);
                 $('#nota3').val(nota3);
 
-                $('#asignatura > option[value="'+asignatura+'"]').attr('selected', 'selected');
+                $('#asignaturasx > option[value="'+asignatura+'"]').attr('selected', 'selected');
                 $('#alumno > option[value="'+alumno+'"]').attr('selected', 'selected');
                 $('#aprobado > option[value="'+aprobado+'"]').attr('selected', 'selected');
 
