@@ -1,15 +1,24 @@
 <?php
 session_start();
-require_once '../db/db.php'; //conexion
+require_once '../db/db.php';
 require_once "../tablasUniver/cuerpo.php";
 require_once 'dependencias.php';//parte del codigo html principal
+require_once '../models/profesor_model.php';
+require_once '../models/personas_model.php';
+
+$per=new Profesor_model();
+$profe = $per->get_profesor();
+
+$per=new personas_model();
+$alumno = $per->get_alumnos();
+
 ?>
 
 
-<p class="lead" style="margin-top: 0px" >Lista de Profesor</p> <hr class="my-1" >
+<p class="lead" style="margin-top: 0px" >Lista de Usuarios</p> <hr class="my-1" >
     <div  align="left" style="margin-bottom: 5px; margin-top: 0px;">
       <a  class="btn btn-info" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-    Agregar profesor
+    Agregar Usuario
    </a>
     </div>
 
@@ -21,53 +30,68 @@ require_once 'dependencias.php';//parte del codigo html principal
                 <div class="form-group">
                 <form id="formAlumno" >
                   <input type="hidden" name="opc" id="opc" value="0">
-                  <label>Nombre</label>
-                  <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" maxlength="30" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+"
+                  <label>Usuario</label>
+                  <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Usuario" maxlength="30" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+"
   >
               </div>
             </div>
 
             <div class="col-sm-3">
                 <div class="form-group">
-                                    <label>Apellido</label>
-                  <input type="text" class="form-control" id="apellido" name="apellido" maxlength="30" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+"
- placeholder="Apellidos"  >
+                                    <label>Contraseña</label>
+                  <input type="text" class="form-control" id="password" name="password" maxlength="30" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+"
+ placeholder="Contraseña"  >
               </div>
             </div>
 
 
-                      <div class="col-sm-3">
+            <div class="col-sm-2">
                 <div class="form-group">
-                  <label>Dirección</label>
-                  <input type="text" class="form-control" id="direccion" name="direccion" maxlength="250" 
- placeholder="Dirección"  >
-              </div>
+             <label>Tipo</label>
+                <div class="mb-3">
+                    <select class="form-select" name="tipo" id="tipo">
+                        <option selected>Seleccione el tipo</option>
+                        <option value="Profesor">Profesor</option>";
+                        <option value="Alumno">Alumno</option>";
+                    </select>
+                </div>
+                </div>
             </div>
 
-
-              <div class="col-sm-3">
-                <div class="form-group">
-                  <label>Tel Movil</label>
-                  <input type="text" class="form-control" id="movil" name="movil" placeholder="Numero Movil" maxlength="10" pattern="^[0-9]+"  >
-              </div>
-            </div>
-
-
-                <div class="col-sm-3">
-                <div class="form-group">
-                  <label>Email</label>
-                  <input type="text" class="form-control" id="email" name="email" maxlength="40"
- placeholder="Correo electronico"   >
-              </div>
-            </div>
 
             <div class="col-sm-3">
                 <div class="form-group">
-                  <label>Profesión</label>
-                  <input type="text" class="form-control" id="profesion" name="profesion" maxlength="40"
- placeholder="Profesión"   >
-              </div>
-            </div>
+             <label>Profesor</label>
+                <div class="mb-3">
+                    <select class="form-select" name="profesor" id="profesor">
+                        <option value='0'  selected>Seleccione el Profesor</option>
+                        <?php
+                        foreach($profe as $profesor){ 
+                        echo "<option value='".$profesor['id']."'>".$profesor['Nombre']." ".$profesor['Apellido']."</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                </div>
+            </div>      
+
+
+            <div class="col-sm-2.5">
+                <div class="form-group">
+             <label>Alumno</label>
+                <div class="mb-3">
+                    <select class="form-select" name="alumno" id="alumno">
+                        <option value='0'  selected>Seleccione el Alumno</option>
+                        <?php
+                        foreach($alumno as $alumnos){ 
+                        echo "<option value='".$alumnos['id']."'>".$alumnos['Nombre']." ".$alumnos['Apellido']."</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                </div>
+            </div> 
+            
 
 
       <div class="col-sm-3">
@@ -85,20 +109,27 @@ require_once 'dependencias.php';//parte del codigo html principal
   <div class="card card-body ">
   <form id="formXAlumno" >
 <div class="alert alert-danger" role="alert">
-  Confirme si desea eliminar al profesor ?
+  Confirme si desea eliminar el Usuario ?
   <input type="hidden" name="IDx" id="IDx" class="form-control">
 </div>
-         <span id="xAlumno" data-toggle="collapse"  class="btn btn-danger">Eliminar Alumno</span>
+         <span id="xAlumno" data-toggle="collapse"  class="btn btn-danger">Eliminar el usuario</span>
          <a   data-toggle="collapse" href="#xAlumno" class="btn btn-success">Cancelar</a>
+
+
   </form>
   </div>
 </div>
 
 
-
             <?php
             $table = new tablacuerpo();
-             $table->alumnos("SELECT * FROM profesor order by Nombre",1);
+             $table->usuarios("SELECT U.id, U.usuario, concat(P.Nombre,' ',P.Apellido) as Usuarios, U.Tipo
+                  FROM user as U
+                    inner join profesor as P on P.id = U.idprofesor
+                    UNION
+                    SELECT U.id, U.usuario, concat(A.Nombre,' ',A.Apellido) as Usuarios,U.Tipo
+                    FROM user as U
+                      inner join alumnos as A on A.id = U.idalumno ",1);
              ?>
 
 
@@ -120,9 +151,9 @@ require_once 'dependencias.php';//parte del codigo html principal
             $.ajax({
               type:"POST",
               data:datos,
-              url:"../controllers/profesor/save.php",
+              url:"../controllers/user/save.php",
               success:function(data){
-                  window.location="../views/profesor.php";
+                  window.location="../views/usuario.php";
                  }
             }); 
 
@@ -132,9 +163,9 @@ require_once 'dependencias.php';//parte del codigo html principal
             $.ajax({
               type:"POST",
               data:datos,
-              url:"../controllers/profesor/update.php",
+              url:"../controllers/update_alumno.php",
               success:function(data){
-                  window.location="../views/profesor.php";
+                  window.location="../views/alumnos.php";
                  }
             }); 
              }
@@ -148,8 +179,7 @@ require_once 'dependencias.php';//parte del codigo html principal
                 var apellido  = $('#'+id).children('td[data-target=Apellido]').text();
                 var direccion  = $('#'+id).children('td[data-target=Direccion]').text();
                 var matricula  = $('#'+id).children('td[data-target=Matricula]').text();
-                var movil  = $('#'+id).children('td[data-target=Movil]').text();
-                var profesion  = $('#'+id).children('td[data-target=Profesion]').text();
+                var tutor  = $('#'+id).children('td[data-target=Tutor]').text();
                 var opc = 1;
 
                 $('#ID').val(id);
@@ -157,8 +187,7 @@ require_once 'dependencias.php';//parte del codigo html principal
                 $('#apellido').val(apellido);
                 $('#direccion').val(direccion);                   
                 $('#matricula').val(matricula);
-                $('#movil').val(movil);
-                $('#profesion').val(profesion);
+                $('#tutor').val(tutor);
                 $('#opc').val(opc);
           });
 
@@ -175,12 +204,13 @@ require_once 'dependencias.php';//parte del codigo html principal
               $.ajax({
                 type:"POST",
                 data:datos,
-                url:"../controllers/profesor/delete.php",
+                url:"../controllers/user/delete.php",
                 success:function(data){
-                    window.location="../views/profesor.php";
+                    window.location="../views/usuario.php";
                   }
               }); 
           });
 
     });
 </script>
+

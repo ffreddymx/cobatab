@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-11-2021 a las 19:06:42
+-- Tiempo de generación: 24-11-2021 a las 07:42:05
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.2.29
 
@@ -55,16 +55,24 @@ INSERT INTO `alumnos` (`id`, `Nombre`, `Apellido`, `Matricula`, `Direccion`, `Mo
 CREATE TABLE `asignatura` (
   `id` int(11) NOT NULL,
   `Asignatura` varchar(50) NOT NULL,
-  `idgrupo` int(11) NOT NULL
+  `idgrupo` int(11) NOT NULL,
+  `Hora` int(2) NOT NULL,
+  `Dia` varchar(10) NOT NULL,
+  `idprofesor` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `asignatura`
 --
 
-INSERT INTO `asignatura` (`id`, `Asignatura`, `idgrupo`) VALUES
-(1, 'Español', 12),
-(4, 'Mecánica Cuántica', 12);
+INSERT INTO `asignatura` (`id`, `Asignatura`, `idgrupo`, `Hora`, `Dia`, `idprofesor`) VALUES
+(1, 'Español', 12, 1, 'Lunes', 1),
+(4, 'Mecánica Cuántica', 12, 2, 'Lunes', 2),
+(6, 'Ciencias', 12, 4, 'Martes', 3),
+(7, 'Español', 12, 4, 'Lunes', 1),
+(8, 'Español', 12, 1, 'Martes', 1),
+(9, 'Mecánica Cuántica', 12, 2, 'Martes', 2),
+(12, 'Mecánica Cuántica', 12, 4, 'Martes', 2);
 
 -- --------------------------------------------------------
 
@@ -86,8 +94,7 @@ CREATE TABLE `grado` (
 INSERT INTO `grado` (`id`, `grado`, `idgrupo`, `idprofesor`) VALUES
 (1, '3ro', 1, 1),
 (2, '2do', 12, 2),
-(4, '2do', 12, 2),
-(5, '4to', 13, 5);
+(5, '4to', 13, 3);
 
 -- --------------------------------------------------------
 
@@ -115,6 +122,32 @@ INSERT INTO `grupo` (`id`, `Grupo`, `Turno`, `Ciclo`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `horario`
+--
+
+CREATE TABLE `horario` (
+  `id` int(11) NOT NULL,
+  `horario` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `horario`
+--
+
+INSERT INTO `horario` (`id`, `horario`) VALUES
+(1, '0600-0650'),
+(2, '0650-0740'),
+(3, '0740-0830'),
+(4, '0830-0920'),
+(5, '0920-0950'),
+(6, '0950-1040'),
+(7, '1040-1130'),
+(8, '1130-1220'),
+(9, '1220-1310');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `inscrito`
 --
 
@@ -129,14 +162,10 @@ CREATE TABLE `inscrito` (
 --
 
 INSERT INTO `inscrito` (`id`, `idalumno`, `idgrupo`) VALUES
-(5, 1, 13),
-(6, 17, 12),
-(9, 15, 12),
-(14, 15, 13),
-(16, 17, 1),
-(17, 0, 0),
-(18, 0, 0),
-(19, 0, 0);
+(27, 1, 13),
+(28, 15, 12),
+(29, 1, 12),
+(30, 17, 12);
 
 -- --------------------------------------------------------
 
@@ -152,7 +181,7 @@ CREATE TABLE `notas` (
   `Nota2` int(2) NOT NULL,
   `Nota3` int(2) NOT NULL,
   `Promedio` float NOT NULL,
-  `Aprobado` varchar(2) NOT NULL
+  `Aprobado` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -160,8 +189,12 @@ CREATE TABLE `notas` (
 --
 
 INSERT INTO `notas` (`id`, `idasignatura`, `idalumno`, `Nota1`, `Nota2`, `Nota3`, `Promedio`, `Aprobado`) VALUES
-(1, 1, 1, 8, 8, 8, 0, 'Si'),
-(2, 4, 1, 0, 0, 0, 0, 'El');
+(8, 1, 15, 9, 9, 9, 0, 'Si'),
+(9, 4, 15, 5, 5, 5, 0, 'No'),
+(10, 1, 1, 8, 8, 8, 0, 'Si'),
+(11, 4, 1, 9, 8, 8, 0, 'Si'),
+(12, 1, 17, 0, 0, 0, 0, 'Cursando'),
+(13, 4, 17, 0, 0, 0, 0, 'Cursando');
 
 -- --------------------------------------------------------
 
@@ -186,7 +219,7 @@ CREATE TABLE `profesor` (
 INSERT INTO `profesor` (`id`, `Nombre`, `Apellido`, `Direccion`, `Email`, `Movil`, `Profesion`) VALUES
 (1, 'Oscar Raul', 'Martines Valdez', 'Las Gaviotas 3ra, Villahermosa, Tabasco', '', '9932658744', 'Lic. Bioquimica'),
 (2, 'Ruben', 'Hernandez Trinidad', 'Oro Verde, Tacotalpa Tabasco', '', '9325487', 'Lic. Matematica'),
-(5, 'Lilina Carolina', 'Mendez Cruz', 'Pichucalco, Chiapas', '', '322145788', 'Ing. Informatica');
+(3, 'Lilina Carolina', 'Mendez Cruz', 'Pichucalco, Chiapas', '', '322145788', 'Ing. Informatica');
 
 -- --------------------------------------------------------
 
@@ -195,28 +228,24 @@ INSERT INTO `profesor` (`id`, `Nombre`, `Apellido`, `Direccion`, `Email`, `Movil
 --
 
 CREATE TABLE `user` (
-  `Id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `usuario` varchar(10) COLLATE latin1_spanish_ci NOT NULL,
   `password` varchar(10) COLLATE latin1_spanish_ci NOT NULL,
-  `Tipo` int(1) NOT NULL,
-  `Nombre` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
-  `Grado` int(5) NOT NULL,
-  `Grupo` varchar(2) COLLATE latin1_spanish_ci NOT NULL
+  `Nivel` int(1) NOT NULL,
+  `Tipo` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
+  `idalumno` int(3) NOT NULL,
+  `idprofesor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `user`
 --
 
-INSERT INTO `user` (`Id`, `usuario`, `password`, `Tipo`, `Nombre`, `Grado`, `Grupo`) VALUES
-(1, 'admin', 'admin', 1, 'Dr Raul Sanchez Doriga', 0, ''),
-(2, 'local', 'local', 2, 'Profesor Oscar', 0, ''),
-(3, 'alumno', 'alumno', 3, 'Fernando Díaz', 1, 'A'),
-(4, 'ssss', 'ssss', 2, 'sss', 2, 'A'),
-(5, 'xxxx', 'xxxx', 2, 'xxx', 2, 'B'),
-(6, 'paquete', 'paquete', 1, 'Armando', 0, ''),
-(7, 'rodolfo', 'rodolfo', 2, 'rodolfo martinez', 0, ''),
-(8, 'sdsdfdsf', '', 0, '', 0, '');
+INSERT INTO `user` (`id`, `usuario`, `password`, `Nivel`, `Tipo`, `idalumno`, `idprofesor`) VALUES
+(1, 'admin', 'admin', 1, 'Administrador', 0, 0),
+(2, 'local', 'local', 3, 'Alumno', 15, 0),
+(3, 'profesor', 'alumno', 2, 'Profesor', 0, 2),
+(15, 'ssss', '', 0, 'Profesor', 0, 3);
 
 --
 -- Índices para tablas volcadas
@@ -251,6 +280,12 @@ ALTER TABLE `grupo`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `horario`
+--
+ALTER TABLE `horario`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `inscrito`
 --
 ALTER TABLE `inscrito`
@@ -274,7 +309,7 @@ ALTER TABLE `profesor`
 -- Indices de la tabla `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`Id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -290,7 +325,7 @@ ALTER TABLE `alumnos`
 -- AUTO_INCREMENT de la tabla `asignatura`
 --
 ALTER TABLE `asignatura`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `grado`
@@ -305,16 +340,22 @@ ALTER TABLE `grupo`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
+-- AUTO_INCREMENT de la tabla `horario`
+--
+ALTER TABLE `horario`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT de la tabla `inscrito`
 --
 ALTER TABLE `inscrito`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `profesor`
@@ -326,7 +367,7 @@ ALTER TABLE `profesor`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Restricciones para tablas volcadas

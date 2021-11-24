@@ -25,6 +25,15 @@ class User{
 		}
 	}
 
+    public function saveUser($datos){
+		$this->db->exec("INSERT INTO user(usuario,password,Tipo,idprofesor,idalumno) values('$datos[0]','$datos[1]','$datos[2]','$datos[3]','$datos[4]')");
+		}
+
+		public function xUser($datos){
+
+			$this->db->exec("DELETE FROM user  where id = '$datos[0]'  ");
+				
+		}
 
 }
 

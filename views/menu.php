@@ -5,10 +5,11 @@
             <i> <img src="../statics/logo.jpg" width="60px">  </i> <span>COBATAB</span></a></header>
 
         <nav class="dashboard-nav-list"><a href="inicio.php" class="dashboard-nav-item"><i class="fas fa-home"></i>
-            Inicio </a><a
-                href="alumnos.php" class="dashboard-nav-item "><i class="fas fa-tachometer-alt"></i> Alumnos
-        </a><a
-                href="profesor.php" class="dashboard-nav-item"><i class="fas fa-file-upload"></i> Profesores </a>
+            Inicio </a>
+            <a href="usuario.php" class="dashboard-nav-item "><i class="fas fa-user"></i> Usuarios </a>
+            <a href="alumnos.php" class="dashboard-nav-item "><i class="fas fa-tachometer-alt"></i> Alumnos </a>
+            
+            <a href="profesor.php" class="dashboard-nav-item"><i class="fas fa-file-upload"></i> Profesores </a>
 
             <div class='dashboard-nav-dropdown'><a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i
                     class="fas fa-photo-video"></i> Grupos </a>
@@ -27,8 +28,8 @@
                     </div>
             </div>
 
-            <a href="administrador.php" class="dashboard-nav-item"><i class="fas fa-cogs"></i> Administrador </a><a
-                    href="#" class="dashboard-nav-item"><i class="fas fa-user"></i> Perfil </a>
+            <a href="administrador.php" class="dashboard-nav-item"><i class="fas fa-cogs"></i> Administrador </a>
+            <a href="horarios.php" class="dashboard-nav-item"><i class="fas fa-user"></i> Horarios </a>
           <div class="nav-item-divider"></div>
           <a
                     href="salir.php" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Salir </a>

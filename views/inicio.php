@@ -59,6 +59,7 @@ p{
 <h2>VISIÓN</h1>
     <p>Se lider en la educación media y superior en la entidad y en el país, garantizando el egreso de individuos éticos, competentes y comprometidos con el entorno social y global.</p>
     
+
     </div>
 </div>
 
@@ -68,7 +69,7 @@ p{
 </body  >
 </html>
 <?php 
-    }else{
+   }else{
         header("location:../index.php");
     }
  ?>

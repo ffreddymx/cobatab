@@ -28,9 +28,7 @@ class personas_model{
 
 
     public function saveAlumno($datos){
-
     $this->db->exec("INSERT INTO alumnos(Nombre,Apellido,Direccion,Movil,Email,Matricula) values('$datos[0]','$datos[1]','$datos[2]','$datos[3]','$datos[4]','$datos[5]')");
-    
     }
 
     public function updateAlumno($datos){

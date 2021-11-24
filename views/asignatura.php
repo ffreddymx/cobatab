@@ -5,6 +5,7 @@ require_once "../tablasUniver/cuerpo.php";
 require_once 'dependencias.php';//parte del codigo html principal
 require_once '../models/grupo_model.php';
 require_once '../models/profesor_model.php';
+require_once '../models/horario_model.php';
 
 $per=new Grupo_model();
 $grupo = $per->get_grupo();
@@ -12,6 +13,9 @@ $grupo = $per->get_grupo();
 $per=new Profesor_model();
 $profe = $per->get_profesor();
 
+
+$per=new Horario_model();
+$horario = $per->get_horario();
 
 ?>
 
@@ -56,6 +60,61 @@ $profe = $per->get_profesor();
                 </div>
             </div>
             
+
+
+            <div class="col-sm-2.5">
+                <div class="form-group">
+             <label>Profesor</label>
+                <div class="mb-3">
+                    <select class="form-select" name="profesor" id="profesor">
+                        <option selected>Seleccione el Profesor</option>
+                        <?php
+                        foreach($profe as $profesor){ 
+                        echo "<option value='".$profesor['id']."'>".$profesor['Nombre']." ".$profesor['Apellido']."</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="col-sm-2">
+                <div class="form-group">
+             <label>Horario</label>
+                <div class="mb-3">
+                    <select class="form-select" name="horario" id="horario">
+                        <option selected>Seleccione la hora</option>
+                        <?php
+                        foreach($horario as $horarios){ 
+                        echo "<option value='".$horarios['id']."'>".$horarios['horario']."</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-sm-2">
+                <div class="form-group">
+             <label>Día</label>
+                <div class="mb-3">
+                    <select class="form-select" name="dia" id="dia">
+                        <option selected>Seleccione el día</option>
+                        <option value="Lunes">Lunes</option>";
+                        <option value="Martes">Martes</option>";
+                        <option value="Miercoles">Miercoles</option>";
+                        <option value="Jueves">Jueves</option>";
+                        <option value="Viernes">Viernes</option>";
+                    </select>
+                </div>
+                </div>
+            </div>
+
             
       <div class="col-sm-3">
             <div class="form-group">
@@ -85,9 +144,12 @@ $profe = $per->get_profesor();
 
             <?php
             $table = new tablacuerpo();
-             $table->asignatura("SELECT A.id,G.id as Grup,A.Asignatura, CONCAT(G.Grupo,' ',G.Turno,' ',G.Ciclo) as Grupo 
+             $table->asignatura("SELECT A.id,G.id as Grup, H.id as Hora,P.id as Profe,   A.Asignatura, CONCAT(G.Grupo,' ',G.Turno,' ',G.Ciclo) as Grupo,
+             A.Dia, H.horario, concat(P.Nombre,' ',P.Apellido) as Profesor 
              FROM asignatura as A
-             inner join grupo as G on G.id = A.idgrupo",1,1);
+             inner join horario as H on H.id = A.Hora
+             inner join profesor as P on P.id = A.idprofesor
+             inner join grupo as G on G.id = A.idgrupo",1,3);
              ?>
 
 
@@ -132,6 +194,9 @@ $profe = $per->get_profesor();
                 var id  = $(this).data('id');
                 var asignatura  = $('#'+id).children('td[data-target=Asignatura]').text();
                 var grupo  = $('#'+id).children('td[data-target=Grup]').text();
+                var hora  = $('#'+id).children('td[data-target=Hora]').text();
+                var profe  = $('#'+id).children('td[data-target=Profe]').text();
+                var dia  = $('#'+id).children('td[data-target=Dia]').text();
            
                 var opc = 1;
 
@@ -140,6 +205,9 @@ $profe = $per->get_profesor();
                 $('#opc').val(opc);
 
                 $('#grupo > option[value="'+grupo+'"]').attr('selected', 'selected');
+                $('#horario > option[value="'+hora+'"]').attr('selected', 'selected');
+                $('#profesor > option[value="'+profe+'"]').attr('selected', 'selected');
+                $('#dia > option[value="'+dia+'"]').attr('selected', 'selected');
 
 
           });

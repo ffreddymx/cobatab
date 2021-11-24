@@ -23,7 +23,7 @@
                 <div class="login-snip"> <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">COBATAB</label> 
                 	<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab"></label>
                     <div class="login-space">
-					<form id="frmLogin">
+					<form id="frmLogin" >
                         <div class="login">
                             <div class="group"> <label for="user" class="label">Usuario</label> 
                             	<input id="user" name="user" type="text" class="input" placeholder="Ingrese su usuario"> </div>

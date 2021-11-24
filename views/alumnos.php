@@ -98,7 +98,6 @@ require_once 'dependencias.php';//parte del codigo html principal
 </div>
 
 
-
             <?php
             $table = new tablacuerpo();
              $table->alumnos("SELECT * FROM alumnos order by Nombre",1);
