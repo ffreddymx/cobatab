@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 session_start();
 require_once '../db/db.php';
 require_once "../tablasUniver/cuerpo.php";
@@ -16,7 +17,7 @@ $alumno = $per->get_alumnos();
 ?>
 
 
-<p class="lead" style="margin-top: 0px; background:#DAF7A6;" ><b>Alumnos Regulares con Asignaturas Aprobadas</b></p> <hr class="my-1" >
+<p class="lead" style="margin-top: 0px; background:#DAF7A6;" ><b>Asignaturas Aprobadas</b></p> <hr class="my-1" >
 
       <form id="formBuscar" action="" method="POST"  >
       <div class="input-group mb-3">
@@ -35,10 +36,10 @@ $alumno = $per->get_alumnos();
               $table = new tablacuerpo();
 
             $alumno = "";
+            if( $_SESSION['nivel'] == 1 or $_SESSION['nivel'] == 2 ){ 
+
             if(isset($_POST['buscarNombre'])){ //check if form was submitted
-
               $alumno = (isset($_POST['Balumno'])) ? $_POST['Balumno'] : '';
-
               if(isset($_POST['buscarNombre'])) { 
 
              $table->irregulares("SELECT DISTINCT N.id,A.id as Asi,AA.id as Alu, Asignatura, AA.Matricula, CONCAT(AA.Nombre,' ',AA.Apellido) as Alumno, GG.Grado,G.Grupo,Nota1,Nota2,Nota3,FORMAT(((Nota1+Nota2+Nota3)/3),2) as Promedio, Aprobado
@@ -70,8 +71,21 @@ $alumno = $per->get_alumnos();
               where N.Aprobado = 'Si'",1,2);
 
             }
+          }else 
 
-             ?>
+            if( $_SESSION['nivel'] == 3){ 
+                $mat = $_SESSION['matricula'];
+              $table->irregulares("SELECT DISTINCT N.id,A.id as Asi,AA.id as Alu, Asignatura,AA.Matricula,  CONCAT(AA.Nombre,' ',AA.Apellido) as Alumno,GG.Grado,G.Grupo, Nota1,Nota2,Nota3,FORMAT(((Nota1+Nota2+Nota3)/3),2) as Promedio, Aprobado
+              from notas as N 
+              inner join asignatura as A on N.idasignatura=A.id
+              inner join grupo as G on G.id = A.idgrupo
+              inner join Grado as GG on GG.idgrupo = G.id
+              inner join alumnos as AA on AA.id = N.idalumno 
+              where N.Aprobado = 'Si' and AA.Matricula='$mat'  ",1,2);
+
+            }
+
+         ?>
 
 
  <?php include 'footer.php'; ?>
