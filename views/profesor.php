@@ -36,15 +36,6 @@ require_once 'dependencias.php';//parte del codigo html principal
             </div>
 
 
-                      <div class="col-sm-3">
-                <div class="form-group">
-                  <label>Dirección</label>
-                  <input type="text" class="form-control" id="direccion" name="direccion" maxlength="250" 
- placeholder="Dirección"  >
-              </div>
-            </div>
-
-
               <div class="col-sm-3">
                 <div class="form-group">
                   <label>Tel Movil</label>
@@ -55,17 +46,17 @@ require_once 'dependencias.php';//parte del codigo html principal
 
                 <div class="col-sm-3">
                 <div class="form-group">
-                  <label>Email</label>
+                  <label>Email personal</label>
                   <input type="text" class="form-control" id="email" name="email" maxlength="40"
- placeholder="Correo electronico"   >
+ placeholder="Email personal"   >
               </div>
             </div>
 
             <div class="col-sm-3">
                 <div class="form-group">
-                  <label>Profesión</label>
+                  <label>Email escolar</label>
                   <input type="text" class="form-control" id="profesion" name="profesion" maxlength="40"
- placeholder="Profesión"   >
+ placeholder="Email escolar"   >
               </div>
             </div>
 
@@ -98,7 +89,7 @@ require_once 'dependencias.php';//parte del codigo html principal
 
             <?php
             $table = new tablacuerpo();
-             $table->alumnos("SELECT * FROM profesor order by Nombre",1);
+             $table->alumnos("SELECT id, Nombre, Apellido, Email as EmailPersonal,Movil,Profesion as EmailEscolar FROM profesor order by Nombre",1);
              ?>
 
 
@@ -146,19 +137,19 @@ require_once 'dependencias.php';//parte del codigo html principal
                 var id  = $(this).data('id');
                 var nombre  = $('#'+id).children('td[data-target=Nombre]').text();
                 var apellido  = $('#'+id).children('td[data-target=Apellido]').text();
-                var direccion  = $('#'+id).children('td[data-target=Direccion]').text();
+                var emailp  = $('#'+id).children('td[data-target=EmailPersonal]').text();
                 var matricula  = $('#'+id).children('td[data-target=Matricula]').text();
                 var movil  = $('#'+id).children('td[data-target=Movil]').text();
-                var profesion  = $('#'+id).children('td[data-target=Profesion]').text();
+                var emaile  = $('#'+id).children('td[data-target=EmailEscolar]').text();
                 var opc = 1;
 
                 $('#ID').val(id);
                 $('#nombre').val(nombre);
                 $('#apellido').val(apellido);
-                $('#direccion').val(direccion);                   
+                $('#email').val(emailp);                   
                 $('#matricula').val(matricula);
                 $('#movil').val(movil);
-                $('#profesion').val(profesion);
+                $('#profesion').val(emaile);
                 $('#opc').val(opc);
           });
 

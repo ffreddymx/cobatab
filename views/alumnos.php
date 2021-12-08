@@ -38,17 +38,17 @@ require_once 'dependencias.php';//parte del codigo html principal
 
                       <div class="col-sm-3">
                 <div class="form-group">
-                  <label>Dirección</label>
+                  <label>Grado</label>
                   <input type="text" class="form-control" id="direccion" name="direccion" maxlength="250" 
- placeholder="Dirección"  >
+ placeholder="Grado"  >
               </div>
             </div>
 
 
               <div class="col-sm-3">
                 <div class="form-group">
-                  <label>Tel Movil</label>
-                  <input type="text" class="form-control" id="movil" name="movil" placeholder="Numero Movil" maxlength="10" pattern="^[0-9]+"  >
+                  <label>Grupo</label>
+                  <input type="text" class="form-control" id="movil" name="movil" placeholder="Grupo" maxlength="10" pattern=""  >
               </div>
             </div>
 
@@ -57,7 +57,7 @@ require_once 'dependencias.php';//parte del codigo html principal
                 <div class="form-group">
                   <label>Email</label>
                   <input type="text" class="form-control" id="email" name="email" maxlength="40"
- placeholder="Correo electronico"   >
+ placeholder="Correo Institucional"   >
               </div>
             </div>
 
@@ -100,7 +100,7 @@ require_once 'dependencias.php';//parte del codigo html principal
 
             <?php
             $table = new tablacuerpo();
-             $table->alumnos("SELECT * FROM alumnos order by Nombre",1);
+             $table->alumnos("SELECT id,Nombre, Apellido, Matricula, Direccion as Grado, Movil as Grupo, Email FROM alumnos order by Nombre",1);
              ?>
 
 
@@ -148,9 +148,10 @@ require_once 'dependencias.php';//parte del codigo html principal
                 var id  = $(this).data('id');
                 var nombre  = $('#'+id).children('td[data-target=Nombre]').text();
                 var apellido  = $('#'+id).children('td[data-target=Apellido]').text();
-                var direccion  = $('#'+id).children('td[data-target=Direccion]').text();
+                var direccion  = $('#'+id).children('td[data-target=Grado]').text();
                 var matricula  = $('#'+id).children('td[data-target=Matricula]').text();
-                var tutor  = $('#'+id).children('td[data-target=Tutor]').text();
+                var email  = $('#'+id).children('td[data-target=Email]').text();
+                var grupo  = $('#'+id).children('td[data-target=Grupo]').text();
                 var opc = 1;
 
                 $('#ID').val(id);
@@ -158,7 +159,8 @@ require_once 'dependencias.php';//parte del codigo html principal
                 $('#apellido').val(apellido);
                 $('#direccion').val(direccion);                   
                 $('#matricula').val(matricula);
-                $('#tutor').val(tutor);
+                $('#email').val(email);
+                $('#movil').val(grupo);
                 $('#opc').val(opc);
           });
 
